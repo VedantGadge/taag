@@ -290,9 +290,9 @@ const HomePage = () => {
           </Typography>
         </Box>
         
-        <Grid container spacing={8} alignItems="center">
-          {/* Image left, text right */}
-          <Grid item xs={12} sm={6}>
+        {/* First feature - Image left, Text right */}
+        <Grid container spacing={8} alignItems="center" sx={{ mb: 12 }}>
+          <Grid item xs={12} md={6}>
             {/* Social Post style card (left of text) */}
             <Box
               sx={{
@@ -340,7 +340,7 @@ const HomePage = () => {
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6}>
             <Box>
               <Typography 
                 variant="h3" 
@@ -386,61 +386,11 @@ const HomePage = () => {
               </Button>
             </Box>
           </Grid>
-          
-          <Grid item xs={12} md={6}>
-            {/* Social Post style card (right of text) */}
-            <Box
-              sx={{
-                position: 'relative',
-                height: { xs: 280, md: 360 },
-                borderRadius: 3,
-                overflow: 'hidden',
-                border: '1px solid #e2e8f0',
-                boxShadow: '0 30px 80px rgba(2, 132, 199, 0.15)',
-                backgroundColor: 'white',
-              }}
-            >
-              <Box
-                component="img"
-                src="/assets/ifnz2.png"
-                alt="Creator post example"
-                loading="lazy"
-                sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
-
-              {/* Tag pills */}
-              <Box sx={{ position: 'absolute', top: 16, right: 16, display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#fce7f3', color: '#831843', fontSize: 12, fontWeight: 600 }}>10k–50k Followers</Box>
-                <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#fee2e2', color: '#7f1d1d', fontSize: 12, fontWeight: 600 }}>18–25 Years</Box>
-                <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#e0f2fe', color: '#075985', fontSize: 12, fontWeight: 600 }}>Atlanta, GA</Box>
-              </Box>
-
-              {/* CTA chip */}
-              <Box
-                sx={{
-                  position: 'absolute',
-                  left: 16,
-                  bottom: 16,
-                  px: 1.5,
-                  py: 0.75,
-                  borderRadius: 999,
-                  bgcolor: '#22c55e',
-                  color: 'white',
-                  fontSize: 13,
-                  fontWeight: 700,
-                  boxShadow: '0 10px 24px rgba(34, 197, 94, 0.35)'
-                }}
-              >
-                DM Creator on Instagram
-              </Box>
-            </Box>
-          </Grid>
         </Grid>
         
-        {/* Second feature */}
-        <Grid container spacing={8} alignItems="center" sx={{ mt: 8 }}>
-          {/* Text left, image right */}
-          <Grid item xs={12} sm={6} order={{ xs: 1, md: 1 }}>
+        {/* Second feature - Text left, Image right */}
+        <Grid container spacing={8} alignItems="center">
+          <Grid item xs={12} md={6}>
             <Box>
               <Typography 
                 variant="h3" 
@@ -487,7 +437,7 @@ const HomePage = () => {
             </Box>
           </Grid>
           
-          <Grid item xs={12} sm={6} order={{ xs: 2, md: 2 }}>
+          <Grid item xs={12} md={6}>
             {/* Social Post style card (right of text) */}
             <Box
               sx={{
@@ -502,7 +452,7 @@ const HomePage = () => {
             >
               <Box
                 component="img"
-                src="/assets/ifnz6.png"
+                src="/assets/ifnz3.png"
                 alt="Campaign content example"
                 loading="lazy"
                 sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
