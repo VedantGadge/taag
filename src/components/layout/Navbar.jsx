@@ -78,26 +78,9 @@ const Navbar = () => {
     <Toolbar>
       <Container maxWidth="xl" sx={{ display: 'flex', alignItems: 'center', px: { xs: 2, sm: 3 } }}>
         {/* Logo */}
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            cursor: 'pointer',
-            mr: 4,
-          }}
-          onClick={() => navigate('/')}
-        >
+        <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', mr: 4 }} onClick={() => navigate('/') }>
           <Campaign sx={{ fontSize: 32, color: 'primary.main', mr: 1 }} />
-          <Typography
-            variant="h5"
-            sx={{
-              fontWeight: 700,
-              background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}
-          >
+          <Typography variant="h5" sx={{ fontWeight: 700, color: 'text.primary' }}>
             MatchBill
           </Typography>
         </Box>
@@ -114,8 +97,8 @@ const Navbar = () => {
               py: 1,
               borderRadius: 2,
               '&:hover': {
-                backgroundColor: 'primary.50',
-                color: 'primary.main',
+                backgroundColor: 'primary.main',
+                color: 'common.white',
               },
             }}
           >
@@ -132,8 +115,8 @@ const Navbar = () => {
               py: 1,
               borderRadius: 2,
               '&:hover': {
-                backgroundColor: 'primary.50',
-                color: 'primary.main',
+                backgroundColor: 'primary.main',
+                color: 'common.white',
               },
             }}
           >
@@ -150,8 +133,8 @@ const Navbar = () => {
               py: 1,
               borderRadius: 2,
               '&:hover': {
-                backgroundColor: 'primary.50',
-                color: 'primary.main',
+                backgroundColor: 'primary.main',
+                color: 'common.white',
               },
             }}
           >

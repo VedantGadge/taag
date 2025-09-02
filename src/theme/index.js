@@ -174,6 +174,42 @@ export const theme = createTheme({
         },
       },
     },
+    // Improve visibility of floating labels on outlined inputs/selects
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          // Ensure labels are always visible and don't truncate
+          whiteSpace: 'nowrap',
+          overflow: 'visible',
+          textOverflow: 'unset',
+          maxWidth: 'none',
+          width: 'auto',
+        },
+        shrink: {
+          // Proper styling when the label is floated
+          backgroundColor: '#ffffff',
+          padding: '0 8px',
+          zIndex: 1,
+          maxWidth: 'none',
+        },
+      },
+    },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          overflow: 'visible',
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        notchedOutline: {
+          '& legend': {
+            maxWidth: 'none',
+          },
+        },
+      },
+    },
   },
 });
 

@@ -350,8 +350,26 @@ const BillingPage = () => {
               control={brandForm.control}
               render={({ field, fieldState }) => (
                 <FormControl fullWidth error={!!fieldState.error}>
-                  <InputLabel>Payment Method</InputLabel>
-                  <Select {...field} label="Payment Method">
+                  <InputLabel sx={{ 
+                    fontSize: '1rem',
+                    whiteSpace: 'nowrap',
+                    overflow: 'visible',
+                    textOverflow: 'unset',
+                    maxWidth: 'none',
+                  }}>Payment Method</InputLabel>
+                  <Select 
+                    {...field} 
+                    label="Payment Method"
+                    sx={{
+                      minHeight: '56px',
+                      '& .MuiInputLabel-root': {
+                        whiteSpace: 'nowrap',
+                        overflow: 'visible',
+                        textOverflow: 'unset',
+                        maxWidth: 'none',
+                      },
+                    }}
+                  >
                     <MenuItem value="Credit Card">Credit Card</MenuItem>
                     <MenuItem value="Bank Transfer">Bank Transfer</MenuItem>
                     <MenuItem value="UPI">UPI</MenuItem>

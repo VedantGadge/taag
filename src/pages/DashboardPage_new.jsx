@@ -711,11 +711,26 @@ const CreatorsTab = ({ creators, filters, onFilterChange }) => {
           </Grid>
           <Grid item xs={12} sm={6} md={2}>
             <FormControl fullWidth>
-              <InputLabel>Location</InputLabel>
+              <InputLabel sx={{ 
+                fontSize: '1rem',
+                whiteSpace: 'nowrap',
+                overflow: 'visible',
+                textOverflow: 'unset',
+                maxWidth: 'none',
+              }}>Location</InputLabel>
               <Select
                 value={filters.location}
                 label="Location"
                 onChange={(e) => onFilterChange({...filters, location: e.target.value})}
+                sx={{
+                  minHeight: '56px',
+                  '& .MuiInputLabel-root': {
+                    whiteSpace: 'nowrap',
+                    overflow: 'visible',
+                    textOverflow: 'unset',
+                    maxWidth: 'none',
+                  },
+                }}
               >
                 <MenuItem value="all">All Locations</MenuItem>
                 <MenuItem value="New York">New York</MenuItem>
@@ -726,11 +741,26 @@ const CreatorsTab = ({ creators, filters, onFilterChange }) => {
           </Grid>
           <Grid item xs={12} sm={6} md={2}>
             <FormControl fullWidth>
-              <InputLabel>Category</InputLabel>
+              <InputLabel sx={{ 
+                fontSize: '1rem',
+                whiteSpace: 'nowrap',
+                overflow: 'visible',
+                textOverflow: 'unset',
+                maxWidth: 'none',
+              }}>Category</InputLabel>
               <Select
                 value={filters.category}
                 label="Category"
                 onChange={(e) => onFilterChange({...filters, category: e.target.value})}
+                sx={{
+                  minHeight: '56px',
+                  '& .MuiInputLabel-root': {
+                    whiteSpace: 'nowrap',
+                    overflow: 'visible',
+                    textOverflow: 'unset',
+                    maxWidth: 'none',
+                  },
+                }}
               >
                 <MenuItem value="all">All Categories</MenuItem>
                 <MenuItem value="Fashion">Fashion</MenuItem>
@@ -742,11 +772,26 @@ const CreatorsTab = ({ creators, filters, onFilterChange }) => {
           </Grid>
           <Grid item xs={12} sm={6} md={2}>
             <FormControl fullWidth>
-              <InputLabel>Platform</InputLabel>
+              <InputLabel sx={{ 
+                fontSize: '1rem',
+                whiteSpace: 'nowrap',
+                overflow: 'visible',
+                textOverflow: 'unset',
+                maxWidth: 'none',
+              }}>Platform</InputLabel>
               <Select
                 value={filters.platform}
                 label="Platform"
                 onChange={(e) => onFilterChange({...filters, platform: e.target.value})}
+                sx={{
+                  minHeight: '56px',
+                  '& .MuiInputLabel-root': {
+                    whiteSpace: 'nowrap',
+                    overflow: 'visible',
+                    textOverflow: 'unset',
+                    maxWidth: 'none',
+                  },
+                }}
               >
                 <MenuItem value="all">All Platforms</MenuItem>
                 <MenuItem value="Instagram">Instagram</MenuItem>
@@ -910,11 +955,26 @@ const BrandsTab = ({ brands, filters, onFilterChange }) => {
           </Grid>
           <Grid item xs={12} sm={6} md={2}>
             <FormControl fullWidth>
-              <InputLabel>Industry</InputLabel>
+              <InputLabel sx={{ 
+                fontSize: '1rem',
+                whiteSpace: 'nowrap',
+                overflow: 'visible',
+                textOverflow: 'unset',
+                maxWidth: 'none',
+              }}>Industry</InputLabel>
               <Select
                 value={filters.category}
                 label="Industry"
                 onChange={(e) => onFilterChange({...filters, category: e.target.value})}
+                sx={{
+                  minHeight: '56px',
+                  '& .MuiInputLabel-root': {
+                    whiteSpace: 'nowrap',
+                    overflow: 'visible',
+                    textOverflow: 'unset',
+                    maxWidth: 'none',
+                  },
+                }}
               >
                 <MenuItem value="all">All Industries</MenuItem>
                 <MenuItem value="Fashion">Fashion</MenuItem>
@@ -926,11 +986,26 @@ const BrandsTab = ({ brands, filters, onFilterChange }) => {
           </Grid>
           <Grid item xs={12} sm={6} md={2}>
             <FormControl fullWidth>
-              <InputLabel>Location</InputLabel>
+              <InputLabel sx={{ 
+                fontSize: '1rem',
+                whiteSpace: 'nowrap',
+                overflow: 'visible',
+                textOverflow: 'unset',
+                maxWidth: 'none',
+              }}>Location</InputLabel>
               <Select
                 value={filters.location}
                 label="Location"
                 onChange={(e) => onFilterChange({...filters, location: e.target.value})}
+                sx={{
+                  minHeight: '56px',
+                  '& .MuiInputLabel-root': {
+                    whiteSpace: 'nowrap',
+                    overflow: 'visible',
+                    textOverflow: 'unset',
+                    maxWidth: 'none',
+                  },
+                }}
               >
                 <MenuItem value="all">All Locations</MenuItem>
                 <MenuItem value="New York">New York</MenuItem>

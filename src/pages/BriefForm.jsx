@@ -7,10 +7,6 @@ import {
   Paper,
   Typography,
   TextField,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
   Chip,
   Box,
   Button,
@@ -18,12 +14,11 @@ import {
   Alert,
   CircularProgress,
   Autocomplete,
-  OutlinedInput,
-  FormHelperText,
   Grid,
   Container,
   Breadcrumbs,
-  Link
+  Link,
+  MenuItem,
 } from '@mui/material';
 import { Home, ChevronRight } from '@mui/icons-material';
 import { api } from '../services/api';
@@ -124,12 +119,12 @@ const BriefForm = () => {
           <Typography color="text.primary">Find Creators</Typography>
         </Breadcrumbs>
 
-        <Paper elevation={3} sx={{ p: { xs: 3, md: 6 }, borderRadius: 4, maxWidth: 900, mx: 'auto' }}>
+        <Paper elevation={3} sx={{ p: { xs: 4, md: 8 }, borderRadius: 4, maxWidth: 1200, mx: 'auto' }}>
           <Box sx={{ textAlign: 'center', mb: 6 }}>
             <Typography variant="h3" fontWeight={700} gutterBottom color="primary">
               Find Your Perfect Creators
             </Typography>
-            <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 600, mx: 'auto' }}>
+            <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 700, mx: 'auto' }}>
               Tell us about your campaign and we'll match you with creators who align with your brand values and target audience
             </Typography>
           </Box>
@@ -141,30 +136,32 @@ const BriefForm = () => {
           )}
 
           <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
-            <Grid container spacing={4}>
-              {/* Category & Budget */}
+            <Grid container spacing={5}>
+              {/* Category */}
               <Grid item xs={12} md={6}>
                 <Controller
                   name="category"
                   control={control}
                   render={({ field }) => (
-                    <FormControl fullWidth error={!!errors.category}>
-                      <InputLabel>Brand Category</InputLabel>
-                      <Select {...field} label="Brand Category">
-                        {categoryOptions.map((option) => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                      {errors.category && (
-                        <FormHelperText>{errors.category.message}</FormHelperText>
-                      )}
-                    </FormControl>
+                    <TextField
+                      {...field}
+                      select
+                      fullWidth
+                      label="Brand Category"
+                      error={!!errors.category}
+                      helperText={errors.category?.message}
+                    >
+                      {categoryOptions.map((option) => (
+                        <MenuItem key={option} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </TextField>
                   )}
                 />
               </Grid>
 
+              {/* Budget */}
               <Grid item xs={12} md={6}>
                 <Controller
                   name="budgetINR"
@@ -172,14 +169,12 @@ const BriefForm = () => {
                   render={({ field }) => (
                     <TextField
                       {...field}
-                      label="Campaign Budget"
                       type="number"
                       fullWidth
+                      label="Budget (INR)"
                       error={!!errors.budgetINR}
                       helperText={errors.budgetINR?.message}
-                      InputProps={{
-                        startAdornment: '₹',
-                      }}
+                      InputProps={{ inputProps: { min: 1000 } }}
                     />
                   )}
                 />
@@ -267,31 +262,36 @@ const BriefForm = () => {
                   name="goals"
                   control={control}
                   render={({ field }) => (
-                    <FormControl fullWidth error={!!errors.goals}>
-                      <InputLabel>Campaign Goals</InputLabel>
-                      <Select
-                        {...field}
-                        multiple
-                        value={field.value || []}
-                        input={<OutlinedInput label="Campaign Goals" />}
-                        renderValue={(selected) => (
+                    <TextField
+                      {...field}
+                      select
+                      fullWidth
+                      label="Campaign Goals"
+                      error={!!errors.goals}
+                      helperText={errors.goals?.message}
+                      SelectProps={{
+                        multiple: true,
+                        value: field.value || [],
+                        renderValue: (selected) => (
                           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                             {selected.map((value) => (
                               <Chip key={value} label={value} size="small" color="secondary" />
                             ))}
                           </Box>
-                        )}
-                      >
-                        {goalOptions.map((option) => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                      {errors.goals && (
-                        <FormHelperText>{errors.goals.message}</FormHelperText>
-                      )}
-                    </FormControl>
+                        ),
+                      }}
+                      sx={{
+                        '& .MuiInputBase-root': {
+                          minHeight: '60px',
+                        },
+                      }}
+                    >
+                      {goalOptions.map((option) => (
+                        <MenuItem key={option} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </TextField>
                   )}
                 />
               </Grid>
@@ -301,31 +301,36 @@ const BriefForm = () => {
                   name="tone"
                   control={control}
                   render={({ field }) => (
-                    <FormControl fullWidth error={!!errors.tone}>
-                      <InputLabel>Content Tone</InputLabel>
-                      <Select
-                        {...field}
-                        multiple
-                        value={field.value || []}
-                        input={<OutlinedInput label="Content Tone" />}
-                        renderValue={(selected) => (
+                    <TextField
+                      {...field}
+                      select
+                      fullWidth
+                      label="Content Tone"
+                      error={!!errors.tone}
+                      helperText={errors.tone?.message}
+                      SelectProps={{
+                        multiple: true,
+                        value: field.value || [],
+                        renderValue: (selected) => (
                           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                             {selected.map((value) => (
                               <Chip key={value} label={value} size="small" color="success" />
                             ))}
                           </Box>
-                        )}
-                      >
-                        {toneOptions.map((option) => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                      {errors.tone && (
-                        <FormHelperText>{errors.tone.message}</FormHelperText>
-                      )}
-                    </FormControl>
+                        ),
+                      }}
+                      sx={{
+                        '& .MuiInputBase-root': {
+                          minHeight: '60px',
+                        },
+                      }}
+                    >
+                      {toneOptions.map((option) => (
+                        <MenuItem key={option} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </TextField>
                   )}
                 />
               </Grid>

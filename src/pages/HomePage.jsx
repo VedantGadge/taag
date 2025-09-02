@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion, useInView } from 'framer-motion';
 import {
   Box,
   Container,
@@ -7,6 +8,41 @@ import {
   Button,
   Grid,
 } from '@mui/material';
+
+// Animation wrapper component
+const AnimatedSection = ({ children, delay = 0, direction = 'up' }) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  const variants = {
+    hidden: {
+      opacity: 0,
+      y: direction === 'up' ? 50 : direction === 'down' ? -50 : 0,
+      x: direction === 'left' ? 50 : direction === 'right' ? -50 : 0,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      x: 0,
+      transition: {
+        duration: 0.8,
+        delay,
+        ease: 'easeOut',
+      },
+    },
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      variants={variants}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -133,25 +169,26 @@ const HomePage = () => {
           </Box>
 
           {/* Trusted by logos */}
-          <Box sx={{ textAlign: 'center', mt: 10 }}>
-            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)', mb: 4, textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>
-              Trusted by leading brands and creators
-            </Typography>
-            <Grid container spacing={4} justifyContent="center" alignItems="center">
-              {['Samsung', 'Nike', 'Coca-Cola', 'Netflix', 'Spotify', 'Amazon'].map((brand) => (
-                <Grid item xs={4} md={2} key={brand}>
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      color: 'rgba(255,255,255,0.9)',
-                      fontWeight: 700,
-                      fontSize: { xs: '0.9rem', md: '1.1rem' },
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.06em',
-                      textShadow: '0 2px 12px rgba(0,0,0,0.8)',
-                      '&:hover': {
-                        color: 'rgba(255,255,255,1)',
-                        transform: 'translateY(-2px)',
+          <AnimatedSection delay={0.3} direction="up">
+            <Box sx={{ textAlign: 'center', mt: 10 }}>
+              <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)', mb: 4, textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>
+                Trusted by leading brands and creators
+              </Typography>
+              <Grid container spacing={4} justifyContent="center" alignItems="center">
+                {['Samsung', 'Nike', 'Coca-Cola', 'Netflix', 'Spotify', 'Amazon'].map((brand) => (
+                  <Grid item xs={4} md={2} key={brand}>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        color: 'rgba(255,255,255,0.9)',
+                        fontWeight: 700,
+                        fontSize: { xs: '0.9rem', md: '1.1rem' },
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.06em',
+                        textShadow: '0 2px 12px rgba(0,0,0,0.8)',
+                        '&:hover': {
+                          color: 'rgba(255,255,255,1)',
+                          transform: 'translateY(-2px)',
                         transition: 'all 0.2s ease',
                       },
                     }}
@@ -161,21 +198,23 @@ const HomePage = () => {
                 </Grid>
               ))}
             </Grid>
-          </Box>
+            </Box>
+          </AnimatedSection>
         </Container>
       </Box>
 
       {/* Stats Section */}
-      <Box sx={{ backgroundColor: 'white', py: 12 }}>
-        <Container maxWidth="lg">
-          <Box sx={{ textAlign: 'center', mb: 8 }}>
-            <Typography 
-              variant="h2" 
-              sx={{ 
-                fontSize: { xs: '2.5rem', md: '3.5rem' },
-                fontWeight: 600,
-                mb: 6,
-                color: '#1a1a1a',
+      <AnimatedSection delay={0.1} direction="up">
+        <Box sx={{ backgroundColor: 'white', py: 12 }}>
+          <Container maxWidth="lg">
+            <Box sx={{ textAlign: 'center', mb: 8 }}>
+              <Typography 
+                variant="h2" 
+                sx={{ 
+                  fontSize: { xs: '2.5rem', md: '3.5rem' },
+                  fontWeight: 600,
+                  mb: 6,
+                  color: '#1a1a1a',
                 letterSpacing: '-0.02em'
               }}
             >
@@ -270,10 +309,12 @@ const HomePage = () => {
             </Grid>
           </Box>
         </Container>
-      </Box>
+        </Box>
+      </AnimatedSection>
 
      {/* Features Section */}
-<Box sx={{ backgroundColor: '#f8fafc', py: 12 }}>
+      <AnimatedSection delay={0.2} direction="up">
+        <Box sx={{ backgroundColor: '#f8fafc', py: 12 }}>
   <Container maxWidth="lg">
     <Box sx={{ textAlign: 'center', mb: 10 }}>
       <Typography 
@@ -450,13 +491,12 @@ const HomePage = () => {
       </Box>
     </Box>
   </Container>
-</Box>
-
-
-      
+        </Box>
+      </AnimatedSection>
 
       {/* CTA Section */}
-      <Box
+      <AnimatedSection delay={0.3} direction="up">
+        <Box
         sx={{
           backgroundColor: '#000000',
           color: 'white',
@@ -570,7 +610,8 @@ const HomePage = () => {
           </Typography>
         </Box>
       </Container>
-    </Box>
+        </Box>
+      </AnimatedSection>
     </Box>
   );
 };

@@ -361,14 +361,27 @@ const MatchConsole = () => {
                     
                     <Grid item xs={12} sm={6} md={3}>
                       <FormControl fullWidth size="small">
-                        <InputLabel>Filter by Location</InputLabel>
+                        <InputLabel sx={{ 
+                          fontSize: '0.9rem',
+                          whiteSpace: 'nowrap',
+                          overflow: 'visible',
+                          textOverflow: 'unset',
+                          maxWidth: 'none',
+                        }}>Filter by Location</InputLabel>
                         <Select
                           value={filters.location}
                           label="Filter by Location"
                           onChange={(e) => handleFilterChange('location', e.target.value)}
                           sx={{ 
                             borderRadius: 2,
-                            backgroundColor: 'white'
+                            backgroundColor: 'white',
+                            minHeight: '48px',
+                            '& .MuiInputLabel-root': {
+                              whiteSpace: 'nowrap',
+                              overflow: 'visible',
+                              textOverflow: 'unset',
+                              maxWidth: 'none',
+                            },
                           }}
                         >
                           <MenuItem value="">All Locations</MenuItem>
@@ -383,14 +396,27 @@ const MatchConsole = () => {
                     
                     <Grid item xs={12} sm={6} md={3}>
                       <FormControl fullWidth size="small">
-                        <InputLabel>Filter by Category</InputLabel>
+                        <InputLabel sx={{ 
+                          fontSize: '0.9rem',
+                          whiteSpace: 'nowrap',
+                          overflow: 'visible',
+                          textOverflow: 'unset',
+                          maxWidth: 'none',
+                        }}>Filter by Category</InputLabel>
                         <Select
                           value={filters.vertical}
                           label="Filter by Category"
                           onChange={(e) => handleFilterChange('vertical', e.target.value)}
                           sx={{ 
                             borderRadius: 2,
-                            backgroundColor: 'white'
+                            backgroundColor: 'white',
+                            minHeight: '48px',
+                            '& .MuiInputLabel-root': {
+                              whiteSpace: 'nowrap',
+                              overflow: 'visible',
+                              textOverflow: 'unset',
+                              maxWidth: 'none',
+                            },
                           }}
                         >
                           <MenuItem value="">All Categories</MenuItem>
@@ -405,14 +431,27 @@ const MatchConsole = () => {
                     
                     <Grid item xs={12} sm={6} md={3}>
                       <FormControl fullWidth size="small">
-                        <InputLabel>Filter by Platform</InputLabel>
+                        <InputLabel sx={{ 
+                          fontSize: '0.9rem',
+                          whiteSpace: 'nowrap',
+                          overflow: 'visible',
+                          textOverflow: 'unset',
+                          maxWidth: 'none',
+                        }}>Filter by Platform</InputLabel>
                         <Select
                           value={filters.platform}
                           label="Filter by Platform"
                           onChange={(e) => handleFilterChange('platform', e.target.value)}
                           sx={{ 
                             borderRadius: 2,
-                            backgroundColor: 'white'
+                            backgroundColor: 'white',
+                            minHeight: '48px',
+                            '& .MuiInputLabel-root': {
+                              whiteSpace: 'nowrap',
+                              overflow: 'visible',
+                              textOverflow: 'unset',
+                              maxWidth: 'none',
+                            },
                           }}
                         >
                           <MenuItem value="">All Platforms</MenuItem>
