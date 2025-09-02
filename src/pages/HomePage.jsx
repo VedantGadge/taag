@@ -6,7 +6,6 @@ import {
   Typography,
   Button,
   Grid,
-  Paper,
 } from '@mui/material';
 
 const HomePage = () => {
@@ -135,7 +134,7 @@ const HomePage = () => {
 
           {/* Trusted by logos */}
           <Box sx={{ textAlign: 'center', mt: 10 }}>
-            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', mb: 4 }}>
+            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)', mb: 4, textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>
               Trusted by leading brands and creators
             </Typography>
             <Grid container spacing={4} justifyContent="center" alignItems="center">
@@ -144,11 +143,17 @@ const HomePage = () => {
                   <Typography
                     variant="h6"
                     sx={{
-                      color: 'rgba(255,255,255,0.4)',
-                      fontWeight: 600,
+                      color: 'rgba(255,255,255,0.9)',
+                      fontWeight: 700,
                       fontSize: { xs: '0.9rem', md: '1.1rem' },
                       textTransform: 'uppercase',
                       letterSpacing: '0.06em',
+                      textShadow: '0 2px 12px rgba(0,0,0,0.8)',
+                      '&:hover': {
+                        color: 'rgba(255,255,255,1)',
+                        transform: 'translateY(-2px)',
+                        transition: 'all 0.2s ease',
+                      },
                     }}
                   >
                     {brand}
@@ -163,105 +168,109 @@ const HomePage = () => {
       {/* Stats Section */}
       <Box sx={{ backgroundColor: 'white', py: 12 }}>
         <Container maxWidth="lg">
-          <Box sx={{ textAlign: 'center', mb: 10 }}>
+          <Box sx={{ textAlign: 'center', mb: 8 }}>
             <Typography 
               variant="h2" 
               sx={{ 
                 fontSize: { xs: '2.5rem', md: '3.5rem' },
                 fontWeight: 600,
-                mb: 3,
+                mb: 6,
                 color: '#1a1a1a',
                 letterSpacing: '-0.02em'
               }}
             >
               Word-of-mouth commerce at scale
             </Typography>
+          
+            {/* Horizontal Stats Row */}
+            <Grid container spacing={6} justifyContent="center" alignItems="center">
+              <Grid item xs={12} sm={4}>
+                <Box sx={{ textAlign: 'center' }}>
+                  <Typography 
+                    variant="h1" 
+                    sx={{ 
+                      fontSize: { xs: '3.5rem', md: '5rem' },
+                      fontWeight: 700,
+                      color: '#0ea5e9',
+                      lineHeight: 1,
+                      mb: 1
+                    }}
+                  >
+                    88%
+                  </Typography>
+                  <Typography 
+                    variant="h6" 
+                    sx={{ 
+                      color: '#1a1a1a',
+                      fontWeight: 400,
+                      lineHeight: 1.4,
+                      fontSize: { xs: '1rem', md: '1.2rem' }
+                    }}
+                  >
+                    of brands trust creator recommendations
+                  </Typography>
+                </Box>
+              </Grid>
+              
+              <Grid item xs={12} sm={4}>
+                <Box sx={{ textAlign: 'center' }}>
+                  <Typography 
+                    variant="h1" 
+                    sx={{ 
+                      fontSize: { xs: '3.5rem', md: '5rem' },
+                      fontWeight: 700,
+                      color: '#0ea5e9',
+                      lineHeight: 1,
+                      mb: 1
+                    }}
+                  >
+                    5.78x
+                  </Typography>
+                  <Typography 
+                    variant="h6" 
+                    sx={{ 
+                      color: '#1a1a1a',
+                      fontWeight: 400,
+                      lineHeight: 1.4,
+                      fontSize: { xs: '1rem', md: '1.2rem' }
+                    }}
+                  >
+                    ROI for every $1 spent on campaigns
+                  </Typography>
+                </Box>
+              </Grid>
+              
+              <Grid item xs={12} sm={4}>
+                <Box sx={{ textAlign: 'center' }}>
+                  <Typography 
+                    variant="h1" 
+                    sx={{ 
+                      fontSize: { xs: '3.5rem', md: '5rem' },
+                      fontWeight: 700,
+                      color: '#0ea5e9',
+                      lineHeight: 1,
+                      mb: 1
+                    }}
+                  >
+                    73%
+                  </Typography>
+                  <Typography 
+                    variant="h6" 
+                    sx={{ 
+                      color: '#1a1a1a',
+                      fontWeight: 400,
+                      lineHeight: 1.4,
+                      fontSize: { xs: '1rem', md: '1.2rem' }
+                    }}
+                  >
+                    more confident purchasing with UGC
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
           </Box>
-        
-        <Grid container spacing={8}>
-          <Grid item xs={12} md={4}>
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography 
-                variant="h1" 
-                sx={{ 
-                  fontSize: { xs: '4rem', md: '6rem' },
-                  fontWeight: 700,
-                  color: '#0ea5e9',
-                  lineHeight: 1,
-                  mb: 2
-                }}
-              >
-                88%
-              </Typography>
-              <Typography 
-                variant="h6" 
-                sx={{ 
-                  color: '#1a1a1a',
-                  fontWeight: 400,
-                  lineHeight: 1.4
-                }}
-              >
-                of brands trust creator recommendations for authentic marketing
-              </Typography>
-            </Box>
-          </Grid>
-          
-          <Grid item xs={12} md={4}>
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography 
-                variant="h1" 
-                sx={{ 
-                  fontSize: { xs: '4rem', md: '6rem' },
-                  fontWeight: 700,
-                  color: '#0ea5e9',
-                  lineHeight: 1,
-                  mb: 2
-                }}
-              >
-                5.78x
-              </Typography>
-              <Typography 
-                variant="h6" 
-                sx={{ 
-                  color: '#1a1a1a',
-                  fontWeight: 400,
-                  lineHeight: 1.4
-                }}
-              >
-                ROI earned for every $1 spent on influencer marketing campaigns
-              </Typography>
-            </Box>
-          </Grid>
-          
-          <Grid item xs={12} md={4}>
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography 
-                variant="h1" 
-                sx={{ 
-                  fontSize: { xs: '4rem', md: '6rem' },
-                  fontWeight: 700,
-                  color: '#0ea5e9',
-                  lineHeight: 1,
-                  mb: 2
-                }}
-              >
-                73%
-              </Typography>
-              <Typography 
-                variant="h6" 
-                sx={{ 
-                  color: '#1a1a1a',
-                  fontWeight: 400,
-                  lineHeight: 1.4
-                }}
-              >
-                said user-generated content made them more confident purchasing
-              </Typography>
-            </Box>
-          </Grid>
-        </Grid>
-      </Container>
-    </Box>
+        </Container>
+      </Box>
 
       {/* Features Section */}
       <Box sx={{ backgroundColor: '#f8fafc', py: 12 }}>
@@ -282,7 +291,56 @@ const HomePage = () => {
         </Box>
         
         <Grid container spacing={8} alignItems="center">
-          <Grid item xs={12} md={6}>
+          {/* Image left, text right */}
+          <Grid item xs={12} sm={6}>
+            {/* Social Post style card (left of text) */}
+            <Box
+              sx={{
+                position: 'relative',
+                height: { xs: 280, md: 360 },
+                borderRadius: 3,
+                overflow: 'hidden',
+                border: '1px solid #e2e8f0',
+                boxShadow: '0 30px 80px rgba(2, 132, 199, 0.15)',
+                backgroundColor: 'white',
+              }}
+            >
+              <Box
+                component="img"
+                src="/assets/ifnz2.png"
+                alt="Creator post example"
+                loading="lazy"
+                sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+
+              {/* Tag pills */}
+              <Box sx={{ position: 'absolute', top: 16, right: 16, display: 'flex', flexDirection: 'column', gap: 1 }}>
+                <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#fce7f3', color: '#831843', fontSize: 12, fontWeight: 600 }}>10k–50k Followers</Box>
+                <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#fee2e2', color: '#7f1d1d', fontSize: 12, fontWeight: 600 }}>18–25 Years</Box>
+                <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#e0f2fe', color: '#075985', fontSize: 12, fontWeight: 600 }}>Atlanta, GA</Box>
+              </Box>
+
+              {/* CTA chip */}
+              <Box
+                sx={{
+                  position: 'absolute',
+                  left: 16,
+                  bottom: 16,
+                  px: 1.5,
+                  py: 0.75,
+                  borderRadius: 999,
+                  bgcolor: '#22c55e',
+                  color: 'white',
+                  fontSize: 13,
+                  fontWeight: 700,
+                  boxShadow: '0 10px 24px rgba(34, 197, 94, 0.35)'
+                }}
+              >
+                DM Creator on Instagram
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6}>
             <Box>
               <Typography 
                 variant="h3" 
@@ -330,117 +388,59 @@ const HomePage = () => {
           </Grid>
           
           <Grid item xs={12} md={6}>
-            <Paper
-              elevation={0}
+            {/* Social Post style card (right of text) */}
+            <Box
               sx={{
-                p: 4,
-                borderRadius: 3,
-                backgroundColor: 'white',
-                border: '1px solid #e2e8f0',
-                height: 300,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
                 position: 'relative',
+                height: { xs: 280, md: 360 },
+                borderRadius: 3,
                 overflow: 'hidden',
+                border: '1px solid #e2e8f0',
+                boxShadow: '0 30px 80px rgba(2, 132, 199, 0.15)',
+                backgroundColor: 'white',
               }}
             >
-              <Typography variant="h6" sx={{ color: '#64748b' }}>
-                Creator Discovery Interface
-              </Typography>
-              
-              {/* Visual elements */}
+              <Box
+                component="img"
+                src="/assets/ifnz2.png"
+                alt="Creator post example"
+                loading="lazy"
+                sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+
+              {/* Tag pills */}
+              <Box sx={{ position: 'absolute', top: 16, right: 16, display: 'flex', flexDirection: 'column', gap: 1 }}>
+                <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#fce7f3', color: '#831843', fontSize: 12, fontWeight: 600 }}>10k–50k Followers</Box>
+                <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#fee2e2', color: '#7f1d1d', fontSize: 12, fontWeight: 600 }}>18–25 Years</Box>
+                <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#e0f2fe', color: '#075985', fontSize: 12, fontWeight: 600 }}>Atlanta, GA</Box>
+              </Box>
+
+              {/* CTA chip */}
               <Box
                 sx={{
                   position: 'absolute',
-                  top: 20,
-                  left: 20,
-                  width: 60,
-                  height: 60,
-                  borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #0ea5e9, #06b6d4)',
-                  opacity: 0.8,
+                  left: 16,
+                  bottom: 16,
+                  px: 1.5,
+                  py: 0.75,
+                  borderRadius: 999,
+                  bgcolor: '#22c55e',
+                  color: 'white',
+                  fontSize: 13,
+                  fontWeight: 700,
+                  boxShadow: '0 10px 24px rgba(34, 197, 94, 0.35)'
                 }}
-              />
-              <Box
-                sx={{
-                  position: 'absolute',
-                  bottom: 20,
-                  right: 20,
-                  width: 40,
-                  height: 40,
-                  borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #06b6d4, #0ea5e9)',
-                  opacity: 0.6,
-                }}
-              />
-            </Paper>
+              >
+                DM Creator on Instagram
+              </Box>
+            </Box>
           </Grid>
         </Grid>
         
         {/* Second feature */}
         <Grid container spacing={8} alignItems="center" sx={{ mt: 8 }}>
-          <Grid item xs={12} md={6} order={{ xs: 2, md: 1 }}>
-            <Paper
-              elevation={0}
-              sx={{
-                p: 4,
-                borderRadius: 3,
-                backgroundColor: 'white',
-                border: '1px solid #e2e8f0',
-                height: 300,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'relative',
-                overflow: 'hidden',
-              }}
-            >
-              <Typography variant="h6" sx={{ color: '#64748b' }}>
-                Campaign Management
-              </Typography>
-              
-              {/* Visual elements */}
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: 30,
-                  right: 30,
-                  width: 80,
-                  height: 4,
-                  borderRadius: 2,
-                  background: '#0ea5e9',
-                  opacity: 0.8,
-                }}
-              />
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: 50,
-                  right: 30,
-                  width: 120,
-                  height: 4,
-                  borderRadius: 2,
-                  background: '#06b6d4',
-                  opacity: 0.6,
-                }}
-              />
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: 70,
-                  right: 30,
-                  width: 60,
-                  height: 4,
-                  borderRadius: 2,
-                  background: '#0ea5e9',
-                  opacity: 0.4,
-                }}
-              />
-            </Paper>
-          </Grid>
-          
-          <Grid item xs={12} md={6} order={{ xs: 1, md: 2 }}>
+          {/* Text left, image right */}
+          <Grid item xs={12} sm={6} order={{ xs: 1, md: 1 }}>
             <Box>
               <Typography 
                 variant="h3" 
@@ -486,9 +486,59 @@ const HomePage = () => {
               </Button>
             </Box>
           </Grid>
+          
+          <Grid item xs={12} sm={6} order={{ xs: 2, md: 2 }}>
+            {/* Social Post style card (right of text) */}
+            <Box
+              sx={{
+                position: 'relative',
+                height: { xs: 280, md: 360 },
+                borderRadius: 3,
+                overflow: 'hidden',
+                border: '1px solid #e2e8f0',
+                boxShadow: '0 30px 80px rgba(2, 132, 199, 0.15)',
+                backgroundColor: 'white',
+              }}
+            >
+              <Box
+                component="img"
+                src="/assets/ifnz6.png"
+                alt="Campaign content example"
+                loading="lazy"
+                sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+
+              {/* Metrics chips */}
+              <Box sx={{ position: 'absolute', top: 16, left: 16, display: 'flex', flexDirection: 'column', gap: 1 }}>
+                <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#dbeafe', color: '#1e3a8a', fontSize: 12, fontWeight: 700 }}>Reach +42%</Box>
+                <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#dcfce7', color: '#065f46', fontSize: 12, fontWeight: 700 }}>CTR 3.1%</Box>
+                <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#fee2e2', color: '#7f1d1d', fontSize: 12, fontWeight: 700 }}>CAC ↓ 18%</Box>
+              </Box>
+
+              {/* Caption chip */}
+              <Box
+                sx={{
+                  position: 'absolute',
+                  right: 16,
+                  bottom: 16,
+                  px: 1.25,
+                  py: 0.5,
+                  borderRadius: 999,
+                  bgcolor: 'rgba(0,0,0,0.55)',
+                  color: 'white',
+                  fontSize: 12,
+                  fontWeight: 600,
+                }}
+              >
+                Sponsored Post
+              </Box>
+            </Box>
+          </Grid>
         </Grid>
       </Container>
     </Box>
+
+      
 
       {/* CTA Section */}
       <Box
