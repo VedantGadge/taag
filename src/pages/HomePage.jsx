@@ -32,7 +32,7 @@ const HomePage = () => {
             top: 0,
             right: 0,
             bottom: 0,
-            width: { xs: '100%', md: '75%' },
+            width: { xs: '80%', md: '80%' },
           }}
         >
           <Box
@@ -50,21 +50,24 @@ const HomePage = () => {
               display: 'block',
             }}
           />
-          {/* Softer left-edge fade for seamless readability blend */}
+          {/* Ultra-smooth left-edge fade for extremely seamless blend */}
           <Box
             sx={{
               position: 'absolute',
               inset: 0,
               pointerEvents: 'none',
               background:
-                'linear-gradient(90deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.85) 12%, rgba(0,0,0,0.65) 25%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.2) 55%, rgba(0,0,0,0.08) 70%, rgba(0,0,0,0.0) 85%)',
+                'linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.98) 3%, rgba(0,0,0,0.95) 6%, rgba(0,0,0,0.9) 10%, rgba(0,0,0,0.82) 15%, rgba(0,0,0,0.72) 20%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.46) 30%, rgba(0,0,0,0.32) 35%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.12) 45%, rgba(0,0,0,0.06) 50%, rgba(0,0,0,0.03) 55%, rgba(0,0,0,0.01) 60%, rgba(0,0,0,0) 65%)',
             }}
           />
         </Box>
 
         {/* Content overlays above video */}
-        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
-          <Box sx={{ maxWidth: { xs: '100%', md: 800 }, mr: { md: '-12%' } }}>
+    <Container maxWidth={false} disableGutters sx={{ position: 'relative', zIndex: 2 }}>
+          <Box sx={{ 
+            maxWidth: { xs: '100%', md: 800 }, 
+            px: { xs: 5, md: 15 }
+          }}>
             <Typography
               variant="h1"
               sx={{
