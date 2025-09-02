@@ -110,143 +110,139 @@ const CreatorsPage = () => {
   const HeroSection = () => (
     <Box
       sx={{
-        background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)',
+        backgroundColor: '#000000',
         color: 'white',
-        py: { xs: 8, md: 12 },
+        py: { xs: 8, md: 14 },
         position: 'relative',
         overflow: 'hidden',
+        minHeight: { md: 520 },
       }}
     >
-      <Container maxWidth="lg">
-        <Grid container spacing={6} alignItems="center">
-          <Grid item xs={12} md={6}>
-            <Typography
-              variant="h1"
+      {/* Right-side background video */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          bottom: 0,
+          width: { xs: '80%', md: '80%' },
+        }}
+      >
+        <Box
+          component="video"
+          src="/assets/HeroVid.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          sx={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+          }}
+        />
+        {/* Edge fade to blend video into black background */}
+        <Box
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            pointerEvents: 'none',
+            background:
+              'linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.98) 3%, rgba(0,0,0,0.95) 6%, rgba(0,0,0,0.9) 10%, rgba(0,0,0,0.82) 15%, rgba(0,0,0,0.72) 20%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.46) 30%, rgba(0,0,0,0.32) 35%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.12) 45%, rgba(0,0,0,0.06) 50%, rgba(0,0,0,0.03) 55%, rgba(0,0,0,0.01) 60%, rgba(0,0,0,0) 65%)',
+          }}
+        />
+      </Box>
+
+      {/* Content overlay */}
+      <Container maxWidth={false} disableGutters sx={{ position: 'relative', zIndex: 2 }}>
+        <Box sx={{ maxWidth: { xs: '100%', md: 800 }, px: { xs: 5, md: 15 } }}>
+          <Typography
+            variant="h1"
+            sx={{
+              fontSize: { xs: '2.5rem', md: '4rem' },
+              fontWeight: 700,
+              mb: 3,
+              lineHeight: 1.15,
+              letterSpacing: '-0.02em',
+            }}
+          >
+            Turn your content into
+            <br />
+            <Box
+              component="span"
               sx={{
-                fontSize: { xs: '2.5rem', md: '3.5rem' },
-                fontWeight: 700,
-                mb: 3,
-                lineHeight: 1.2,
+                background: 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
               }}
             >
-              Monetize Your
-              <Box component="span" sx={{ color: '#fbbf24', display: 'block' }}>
-                Creative Passion
-              </Box>
-            </Typography>
-            
-            <Typography
-              variant="h5"
-              sx={{
-                mb: 4,
-                opacity: 0.9,
-                fontSize: { xs: '1.1rem', md: '1.25rem' },
-                lineHeight: 1.6,
-              }}
-            >
-              Connect with top brands, get fair compensation, and grow your audience with 
-              campaigns that match your content style and values.
-            </Typography>
-            
-            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-              <Button
-                variant="contained"
-                size="large"
-                onClick={() => navigate('/creators/dashboard')}
-                sx={{
-                  backgroundColor: 'white',
-                  color: 'secondary.main',
-                  px: 4,
-                  py: 1.5,
-                  fontSize: '1rem',
-                  fontWeight: 600,
-                  '&:hover': {
-                    backgroundColor: '#f8fafc',
-                    transform: 'translateY(-2px)',
-                  },
-                }}
-              >
-                Join as Creator
-              </Button>
-              <Button
-                variant="outlined"
-                size="large"
-                sx={{
-                  borderColor: 'white',
-                  color: 'white',
-                  px: 4,
-                  py: 1.5,
-                  fontSize: '1rem',
-                  fontWeight: 600,
-                  '&:hover': {
-                    borderColor: 'white',
-                    backgroundColor: alpha('#ffffff', 0.1),
-                  },
-                }}
-              >
-                View Success Stories
-              </Button>
+              real income
             </Box>
-          </Grid>
-          
-          <Grid item xs={12} md={6}>
-            <Paper
-              elevation={10}
+          </Typography>
+
+          <Typography
+            variant="h5"
+            sx={{
+              mb: 5,
+              opacity: 0.85,
+              fontSize: { xs: '1.15rem', md: '1.35rem' },
+              lineHeight: 1.55,
+              maxWidth: 640,
+              fontWeight: 400,
+            }}
+          >
+            Get matched with verified brands, earn fairly, and grow your audience—without spam.
+          </Typography>
+
+          <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+            <Button
+              variant="contained"
+              size="large"
+              onClick={() => navigate('/creators/dashboard')}
               sx={{
-                p: 4,
-                borderRadius: 4,
-                background: 'rgba(255, 255, 255, 0.95)',
-                backdropFilter: 'blur(10px)',
+                backgroundColor: '#0ea5e9',
+                color: 'white',
+                px: 5,
+                py: 2,
+                fontSize: '1.05rem',
+                fontWeight: 600,
+                borderRadius: 2,
+                textTransform: 'none',
+                boxShadow: 'none',
+                '&:hover': {
+                  backgroundColor: '#0284c7',
+                  boxShadow: '0 20px 40px rgba(14, 165, 233, 0.3)',
+                  transform: 'translateY(-2px)',
+                },
               }}
             >
-              <Typography variant="h6" fontWeight={600} color="text.primary" gutterBottom>
-                Creator Benefits
-              </Typography>
-              <Grid container spacing={3}>
-                <Grid item xs={6}>
-                  <Box sx={{ textAlign: 'center' }}>
-                    <Typography variant="h4" fontWeight={700} color="success.main">
-                      24h
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Payment Time
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={6}>
-                  <Box sx={{ textAlign: 'center' }}>
-                    <Typography variant="h4" fontWeight={700} color="primary.main">
-                      2.5K+
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Active Brands
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={6}>
-                  <Box sx={{ textAlign: 'center' }}>
-                    <Typography variant="h4" fontWeight={700} color="secondary.main">
-                      ₹3.2Cr
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Paid to Creators
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={6}>
-                  <Box sx={{ textAlign: 'center' }}>
-                    <Typography variant="h4" fontWeight={700} color="warning.main">
-                      4.8★
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Creator Rating
-                    </Typography>
-                  </Box>
-                </Grid>
-              </Grid>
-            </Paper>
-          </Grid>
-        </Grid>
+              Join as Creator
+            </Button>
+            <Button
+              variant="outlined"
+              size="large"
+              sx={{
+                borderColor: '#0ea5e9',
+                color: '#0ea5e9',
+                px: 5,
+                py: 2,
+                fontSize: '1.05rem',
+                fontWeight: 600,
+                borderRadius: 2,
+                textTransform: 'none',
+                '&:hover': {
+                  borderColor: '#0ea5e9',
+                  backgroundColor: alpha('#0ea5e9', 0.1),
+                },
+              }}
+            >
+              View Success Stories
+            </Button>
+          </Box>
+        </Box>
       </Container>
     </Box>
   );

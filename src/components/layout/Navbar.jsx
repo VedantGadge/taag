@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import {
   AppBar,
   Toolbar,
@@ -7,8 +8,6 @@ import {
   Button,
   Box,
   Container,
-  Menu,
-  MenuItem,
   IconButton,
   useMediaQuery,
   useTheme,
@@ -23,10 +22,7 @@ import {
   Close as CloseIcon,
   Campaign,
   Person,
-  Dashboard,
-  Receipt,
   TrendingUp,
-  Group,
 } from '@mui/icons-material';
 
 const Navbar = () => {
@@ -35,38 +31,55 @@ const Navbar = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   
-  const [brandMenuAnchor, setBrandMenuAnchor] = useState(null);
-  const [creatorMenuAnchor, setCreatorMenuAnchor] = useState(null);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  
+  // Refs for navbar items to calculate indicator position
+  const brandsRef = useRef(null);
+  const creatorsRef = useRef(null);
+  const analyticsRef = useRef(null);
+  
+  // State for sliding indicator
+  const [indicatorStyle, setIndicatorStyle] = useState({ width: 0, left: 0 });
+  const [isInitialized, setIsInitialized] = useState(false);
 
-  const brandMenuItems = [
-    { label: 'Find Creators', path: '/brands/find-creators', icon: <Person /> },
-    { label: 'Campaign Dashboard', path: '/brands/dashboard', icon: <Dashboard /> },
-    { label: 'Billing & Payments', path: '/billing', icon: <Receipt /> },
-  ];
+  // Update indicator position when route changes
+  useEffect(() => {
+    const updateIndicator = () => {
+      let activeRef = null;
+      
+      if (location.pathname.startsWith('/brands')) {
+        activeRef = brandsRef.current;
+      } else if (location.pathname.startsWith('/creators')) {
+        activeRef = creatorsRef.current;
+      } else if (location.pathname.startsWith('/dashboard')) {
+        activeRef = analyticsRef.current;
+      }
+      
+      if (activeRef) {
+        const { offsetLeft, offsetWidth } = activeRef;
+        setIndicatorStyle({ left: offsetLeft, width: offsetWidth });
+        setIsInitialized(true);
+      } else {
+        // Hide indicator when no section is active
+        setIndicatorStyle({ left: 0, width: 0 });
+        setIsInitialized(false);
+      }
+    };
 
-  const creatorMenuItems = [
-    { label: 'Creator Dashboard', path: '/creators/dashboard', icon: <Dashboard /> },
-    { label: 'Analytics', path: '/creators/analytics', icon: <TrendingUp /> },
-    { label: 'Collaborations', path: '/creators/collaborations', icon: <Group /> },
-  ];
-
-  const handleBrandMenuOpen = (event) => {
-    setBrandMenuAnchor(event.currentTarget);
-  };
-
-  const handleCreatorMenuOpen = (event) => {
-    setCreatorMenuAnchor(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setBrandMenuAnchor(null);
-    setCreatorMenuAnchor(null);
-  };
+    // Immediate update, then small delay as backup
+    updateIndicator();
+    const timer = setTimeout(updateIndicator, 10);
+    
+    // Re-calculate on window resize
+    window.addEventListener('resize', updateIndicator);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', updateIndicator);
+    };
+  }, [location.pathname]);
 
   const handleNavigation = (path) => {
     navigate(path);
-    handleMenuClose();
     setMobileDrawerOpen(false);
   };
 
@@ -79,25 +92,57 @@ const Navbar = () => {
       <Container maxWidth="xl" sx={{ display: 'flex', alignItems: 'center', px: { xs: 2, sm: 3 } }}>
         {/* Logo */}
         <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', mr: 4 }} onClick={() => navigate('/') }>
-          <Campaign sx={{ fontSize: 32, color: 'primary.main', mr: 1 }} />
-          <Typography variant="h5" sx={{ fontWeight: 700, color: 'text.primary' }}>
+          <Campaign sx={{ fontSize: 32, color: 'common.white', mr: 1 }} />
+          <Typography variant="h5" sx={{ fontWeight: 800, color: 'common.white', letterSpacing: 0.2 }}>
             MatchBill
           </Typography>
         </Box>
 
         {/* Navigation Links */}
-        <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', position: 'relative' }}>
+          {/* Sliding background indicator */}
+          {isInitialized && (
+            <motion.div
+              layout
+              layoutId="navbar-indicator"
+              style={{
+                position: 'absolute',
+                top: '2px',
+                bottom: '2px',
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                borderRadius: '12px',
+                zIndex: 0,
+              }}
+              initial={false}
+              animate={{
+                left: indicatorStyle.left,
+                width: indicatorStyle.width,
+              }}
+              transition={{
+                type: 'spring',
+                stiffness: 600,
+                damping: 60,
+                mass: 0.6,
+                restDelta: 0.01,
+                restSpeed: 0.01,
+              }}
+            />
+          )}
+          
           {/* For Brands */}
           <Button
-            onClick={handleBrandMenuOpen}
+            ref={brandsRef}
+            onClick={() => handleNavigation('/brands')}
             sx={{
-              color: isActivePath('/brands') ? 'primary.main' : 'text.primary',
+              color: isActivePath('/brands') ? 'common.white' : 'rgba(255, 255, 255, 0.8)',
               fontWeight: isActivePath('/brands') ? 600 : 500,
               px: 2,
               py: 1,
               borderRadius: 2,
+              position: 'relative',
+              zIndex: 1,
               '&:hover': {
-                backgroundColor: 'primary.main',
+                backgroundColor: 'transparent',
                 color: 'common.white',
               },
             }}
@@ -107,15 +152,18 @@ const Navbar = () => {
 
           {/* For Creators */}
           <Button
-            onClick={handleCreatorMenuOpen}
+            ref={creatorsRef}
+            onClick={() => handleNavigation('/creators')}
             sx={{
-              color: isActivePath('/creators') ? 'primary.main' : 'text.primary',
+              color: isActivePath('/creators') ? 'common.white' : 'rgba(255, 255, 255, 0.8)',
               fontWeight: isActivePath('/creators') ? 600 : 500,
               px: 2,
               py: 1,
               borderRadius: 2,
+              position: 'relative',
+              zIndex: 1,
               '&:hover': {
-                backgroundColor: 'primary.main',
+                backgroundColor: 'transparent',
                 color: 'common.white',
               },
             }}
@@ -123,17 +171,20 @@ const Navbar = () => {
             For Creators
           </Button>
 
-          {/* Dashboard */}
+          {/* Analytics */}
           <Button
-            onClick={() => navigate('/dashboard')}
+            ref={analyticsRef}
+            onClick={() => handleNavigation('/dashboard')}
             sx={{
-              color: isActivePath('/dashboard') ? 'primary.main' : 'text.primary',
+              color: isActivePath('/dashboard') ? 'common.white' : 'rgba(255, 255, 255, 0.8)',
               fontWeight: isActivePath('/dashboard') ? 600 : 500,
               px: 2,
               py: 1,
               borderRadius: 2,
+              position: 'relative',
+              zIndex: 1,
               '&:hover': {
-                backgroundColor: 'primary.main',
+                backgroundColor: 'transparent',
                 color: 'common.white',
               },
             }}
@@ -148,11 +199,12 @@ const Navbar = () => {
             variant="outlined"
             onClick={() => navigate('/login')}
             sx={{
-              borderColor: 'primary.main',
-              color: 'primary.main',
+              borderColor: 'rgba(255, 255, 255, 0.6)',
+              color: 'rgba(255, 255, 255, 0.9)',
               '&:hover': {
-                borderColor: 'primary.dark',
-                backgroundColor: 'primary.50',
+                borderColor: 'rgba(255, 255, 255, 0.9)',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                color: 'common.white',
               },
             }}
           >
@@ -162,9 +214,9 @@ const Navbar = () => {
             variant="contained"
             onClick={() => navigate('/signup')}
             sx={{
-              background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+              background: 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%)',
               '&:hover': {
-                background: 'linear-gradient(135deg, #4338ca 0%, #7c3aed 100%)',
+                background: 'linear-gradient(135deg, #0284c7 0%, #0891b2 100%)',
               },
             }}
           >
@@ -187,15 +239,12 @@ const Navbar = () => {
           }}
           onClick={() => navigate('/')}
         >
-          <Campaign sx={{ fontSize: 28, color: 'primary.main', mr: 1 }} />
+          <Campaign sx={{ fontSize: 28, color: 'common.white', mr: 1 }} />
           <Typography
             variant="h6"
             sx={{
               fontWeight: 700,
-              background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              color: 'common.white',
             }}
           >
             MatchBill
@@ -205,7 +254,7 @@ const Navbar = () => {
         {/* Mobile Menu Button */}
         <IconButton
           onClick={() => setMobileDrawerOpen(true)}
-          sx={{ color: 'text.primary' }}
+          sx={{ color: 'common.white' }}
         >
           <MenuIcon />
         </IconButton>
@@ -215,79 +264,29 @@ const Navbar = () => {
 
   return (
     <>
-      <AppBar position="sticky" elevation={0}>
+    <AppBar 
+        position="sticky" 
+        elevation={0}
+        square
+        color="transparent"
+        sx={{
+          // Seamless gradient background
+          backgroundImage: 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%)',
+          backgroundColor: 'transparent',
+          // Remove any borders/outlines/rounded corners
+          border: 'none !important',
+          outline: 'none !important',
+          boxShadow: 'none',
+      borderRadius: '0 !important',
+      overflow: 'hidden',
+          // Ensure children do not re-introduce rounding
+          '& .MuiToolbar-root': {
+            borderRadius: '0 !important',
+          },
+        }}
+      >
         {isMobile ? <MobileNav /> : <DesktopNav />}
       </AppBar>
-
-      {/* Brand Menu */}
-      <Menu
-        anchorEl={brandMenuAnchor}
-        open={Boolean(brandMenuAnchor)}
-        onClose={handleMenuClose}
-        PaperProps={{
-          sx: {
-            mt: 1,
-            borderRadius: 2,
-            minWidth: 200,
-            boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
-          },
-        }}
-      >
-        {brandMenuItems.map((item) => (
-          <MenuItem
-            key={item.path}
-            onClick={() => handleNavigation(item.path)}
-            sx={{
-              py: 1.5,
-              px: 2,
-              '&:hover': {
-                backgroundColor: 'primary.50',
-                color: 'primary.main',
-              },
-            }}
-          >
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              {item.icon}
-              <Typography variant="body2">{item.label}</Typography>
-            </Box>
-          </MenuItem>
-        ))}
-      </Menu>
-
-      {/* Creator Menu */}
-      <Menu
-        anchorEl={creatorMenuAnchor}
-        open={Boolean(creatorMenuAnchor)}
-        onClose={handleMenuClose}
-        PaperProps={{
-          sx: {
-            mt: 1,
-            borderRadius: 2,
-            minWidth: 200,
-            boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
-          },
-        }}
-      >
-        {creatorMenuItems.map((item) => (
-          <MenuItem
-            key={item.path}
-            onClick={() => handleNavigation(item.path)}
-            sx={{
-              py: 1.5,
-              px: 2,
-              '&:hover': {
-                backgroundColor: 'primary.50',
-                color: 'primary.main',
-              },
-            }}
-          >
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              {item.icon}
-              <Typography variant="body2">{item.label}</Typography>
-            </Box>
-          </MenuItem>
-        ))}
-      </Menu>
 
       {/* Mobile Drawer */}
       <Drawer
@@ -316,52 +315,46 @@ const Navbar = () => {
               FOR BRANDS
             </Typography>
           </ListItem>
-          {brandMenuItems.map((item) => (
-            <ListItem
-              key={item.path}
-              button
-              onClick={() => handleNavigation(item.path)}
-              sx={{
-                borderRadius: 2,
-                mx: 1,
-                mb: 1,
-                '&:hover': {
-                  backgroundColor: 'primary.50',
-                },
-              }}
-            >
-              <ListItemIcon sx={{ color: 'primary.main', minWidth: 40 }}>
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText primary={item.label} />
-            </ListItem>
-          ))}
+          <ListItem
+            button
+            onClick={() => handleNavigation('/brands')}
+            sx={{
+              borderRadius: 2,
+              mx: 1,
+              mb: 1,
+              '&:hover': {
+                backgroundColor: 'primary.50',
+              },
+            }}
+          >
+            <ListItemIcon sx={{ color: 'primary.main', minWidth: 40 }}>
+              <Person />
+            </ListItemIcon>
+            <ListItemText primary="For Brands" />
+          </ListItem>
 
           <ListItem>
             <Typography variant="subtitle2" color="text.secondary" sx={{ px: 2, py: 1 }}>
               FOR CREATORS
             </Typography>
           </ListItem>
-          {creatorMenuItems.map((item) => (
-            <ListItem
-              key={item.path}
-              button
-              onClick={() => handleNavigation(item.path)}
-              sx={{
-                borderRadius: 2,
-                mx: 1,
-                mb: 1,
-                '&:hover': {
-                  backgroundColor: 'primary.50',
-                },
-              }}
-            >
-              <ListItemIcon sx={{ color: 'secondary.main', minWidth: 40 }}>
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText primary={item.label} />
-            </ListItem>
-          ))}
+          <ListItem
+            button
+            onClick={() => handleNavigation('/creators')}
+            sx={{
+              borderRadius: 2,
+              mx: 1,
+              mb: 1,
+              '&:hover': {
+                backgroundColor: 'primary.50',
+              },
+            }}
+          >
+            <ListItemIcon sx={{ color: 'secondary.main', minWidth: 40 }}>
+              <Person />
+            </ListItemIcon>
+            <ListItemText primary="For Creators" />
+          </ListItem>
 
           <ListItem>
             <Typography variant="subtitle2" color="text.secondary" sx={{ px: 2, py: 1 }}>

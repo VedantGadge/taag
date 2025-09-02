@@ -153,6 +153,37 @@ const DashboardPage = () => {
 
   return (
     <Box>
+      {/* Hero Section to align with homepage/brands */}
+      <Box sx={{ backgroundColor: '#000000', color: 'white', py: { xs: 6, md: 10 } }}>
+        <Container maxWidth="lg">
+          <Typography
+            variant="h2"
+            sx={{
+              fontSize: { xs: '2rem', md: '3rem' },
+              fontWeight: 700,
+              mb: 2,
+              lineHeight: 1.2,
+            }}
+          >
+            Actionable
+            {' '}
+            <Box
+              component="span"
+              sx={{
+                background: 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              Analytics
+            </Box>
+          </Typography>
+          <Typography variant="h6" sx={{ opacity: 0.85, maxWidth: 800 }}>
+            Track creator performance, audience growth, campaigns, and revenue—all in one place.
+          </Typography>
+        </Container>
+      </Box>
       {/* Hero Section with Marketing Videos */}
       <Box sx={{ 
         background: 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #38bdf8 100%)', 
@@ -551,7 +582,7 @@ const OverviewTab = ({ overviewData }) => {
 
   return (
     <Box>
-      {/* Metrics Cards */}
+  {/* Metrics Cards */}
       <Grid container spacing={4} sx={{ mb: 6 }}>
         {metrics.map((metric, index) => (
           <Grid item xs={12} sm={6} md={3} key={index}>

@@ -167,10 +167,12 @@ export const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: 'rgba(255, 255, 255, 0.95)',
-          backdropFilter: 'blur(10px)',
-          borderBottom: '1px solid #f3f4f6',
-          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)',
+          // Keep AppBars clean by default; individual components can set their own backgrounds
+          backgroundColor: 'transparent',
+          backdropFilter: 'none',
+          border: 'none',
+          boxShadow: 'none',
+          borderRadius: 0,
         },
       },
     },
