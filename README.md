@@ -1,49 +1,302 @@
-# Getting Started with Create React App
+# Match & Bill - Brand-Creator Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack web application that connects brands with content creators through intelligent matching algorithms and provides comprehensive billing management.
 
-## Available Scripts
+## 🚀 Features
 
-In the project directory, you can run:
+### 1. Brand-Creator Matching
+- **Intelligent Scoring Algorithm**: Multi-factor scoring system with weighted criteria
+- **Advanced Filtering**: Filter by location, vertical, platform, and score
+- **Real-time Results**: Instant matching with detailed explanations
+- **Diversification Logic**: Ensures variety in top recommendations
 
-### `npm start`
+### 2. Billing & Payout Management
+- **Two-step Form Flow**: Separate brand billing and creator payout forms
+- **Comprehensive Validation**: Real-time validation with detailed error messages
+- **Tax Calculation**: Automatic GST calculation (18%)
+- **Summary Generation**: Print and save billing summaries
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🛠️ Tech Stack
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**Backend:**
+- Node.js with Express
+- Zod for validation
+- CORS for cross-origin requests
 
-### `npm test`
+**Frontend:**
+- React with Vite
+- Material-UI (MUI) for components
+- React Hook Form for form management
+- Zod for client-side validation
+- Axios for API calls
+- React Router for navigation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 📁 Project Structure
 
-### `npm run build`
+```
+taag/
+├── backend/                 # Backend API server
+│   ├── controllers/         # Request handlers
+│   ├── routes/             # API routes
+│   ├── services/           # Business logic
+│   ├── db.js              # In-memory data storage
+│   ├── index.js           # Server entry point
+│   └── package.json       # Backend dependencies
+├── src/                    # Frontend React app
+│   ├── components/         # Reusable components
+│   ├── pages/             # Page components
+│   ├── services/          # API service layer
+│   └── App.js             # Main app component
+├── public/                 # Static assets
+└── package.json           # Frontend dependencies
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🚀 Getting Started
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Installation & Setup
 
-### `npm run eject`
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd taag
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. **Install Frontend Dependencies**
+   ```bash
+   npm install
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. **Install Backend Dependencies**
+   ```bash
+   cd backend
+   npm install
+   cd ..
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. **Start the Backend Server**
+   ```bash
+   cd backend
+   npm run dev
+   # Server runs on http://localhost:5000
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+5. **Start the Frontend Development Server**
+   ```bash
+   # In a new terminal, from the root directory
+   npm start
+   # App runs on http://localhost:3000
+   ```
 
-## Learn More
+6. **Access the Application**
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:5000
+   - Health Check: http://localhost:5000/health
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🎯 Matching Algorithm Explained
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Overview
+The core matching algorithm evaluates brand-creator compatibility using a weighted scoring system that considers multiple factors to ensure the best possible matches.
+
+### Scoring Formula
+```
+Total Score = (Relevance × 0.4) + (Audience Fit × 0.3) + (Performance × 0.2) + (Constraints × 0.1)
+```
+
+### 1. Eligibility Filtering (Pre-Scoring)
+Before scoring, creators are filtered based on:
+- **Budget Constraint**: Creator's base price ≤ Brand's budget
+- **Platform Availability**: Creator uses at least one required platform
+- **Content Safety**: Respects no-adult-content constraints
+
+### 2. Relevance Scoring (40% weight)
+Measures how well the creator's experience aligns with the brand's category:
+
+- **Perfect Match (100 points)**: Brand category in creator's `pastBrandCategories`
+  - *Reason: "Proven experience in [Category]"*
+- **Good Match (70 points)**: Brand category in creator's `verticals`
+  - *Reason: "Relevant Vertical: [Vertical]"*
+- **No Match (0 points)**: No category alignment
+
+### 3. Audience Fit Scoring (30% weight)
+Evaluates demographic alignment between brand targets and creator audience:
+
+**Location Score:**
+- Sums percentages of creator's audience in brand's target locations
+- Example: If brand targets Mumbai (creator has 42% Mumbai audience) = 42 points
+
+**Age Score:**
+- Calculates overlap between brand's target age range and creator's audience age buckets
+- Uses proportional overlap calculation for accuracy
+- Example: Brand targets 18-30, creator has 55% in 18-24 and 35% in 25-34
+
+**Final Score:** Average of location and age scores
+- *Reason: "[XX]% audience match in target cities"*
+
+### 4. Performance Scoring (20% weight)
+Assesses value-for-money and engagement metrics:
+
+**Cost Per View (CPV) Analysis:**
+- Calculates CPV = basePriceINR ÷ avgViews
+- Normalizes across all creators (lower CPV = higher score)
+- Contributes 50% of performance score
+
+**Engagement Rate:**
+- Scaled engagement rate contributing 50% of performance score
+- Higher engagement = better score
+
+**Reasoning:**
+- High engagement: "High [X]% Engagement"
+- Good value: "Great value for money (Low CPV)"
+
+### 5. Constraints Scoring (10% weight)
+Ensures compliance with brand requirements:
+- **Full Compliance (100 points)**: Meets all constraints
+- **Violation (0 points)**: Violates any constraint
+- *Reason: "Meets all constraints" or "Violates content guidelines"*
+
+### 6. Diversification Rule
+After initial scoring and ranking:
+1. Examines top 3 results
+2. If all have the same primary vertical:
+   - Finds next highest-scoring creator from different vertical
+   - Swaps with 3rd position
+   - Adds reason: "Promoted for diversification"
+
+### Example Calculation
+
+**Brand Brief:**
+- Category: Fashion
+- Budget: ₹500,000
+- Target: Mumbai, Delhi
+- Age: 18-30
+
+**Creator: @fitwithria**
+- Past Categories: [Fashion, Wellness]
+- Audience: Mumbai 42%, Delhi 20%
+- Age: 18-24 (55%), 25-34 (35%)
+- Price: ₹80,000
+- Engagement: 4.7%
+
+**Scoring:**
+1. **Relevance**: 100 (Fashion in past categories)
+2. **Audience Fit**: 62 (Mumbai 42% + Delhi 20% = 62% location match)
+3. **Performance**: 75 (Good engagement + reasonable CPV)
+4. **Constraints**: 100 (Meets all requirements)
+
+**Final Score**: (100×0.4) + (62×0.3) + (75×0.2) + (100×0.1) = **86**
+
+## 📊 API Endpoints
+
+### Matching API
+- **POST** `/api/match` - Find matching creators
+  ```json
+  {
+    "category": "Fashion",
+    "targetLocations": ["Mumbai", "Delhi"],
+    "targetAges": [18, 30],
+    "platforms": ["Instagram", "YouTube"],
+    "budgetINR": 500000,
+    "noAdultContent": true
+  }
+  ```
+
+### Billing APIs
+- **POST** `/api/billing/brand` - Submit brand billing details
+- **POST** `/api/billing/creator` - Submit creator payout details
+
+### Health Check
+- **GET** `/health` - API health status
+
+## 🎨 UI Components
+
+### Pages
+- **BriefForm**: Brand brief submission with validation
+- **MatchConsole**: Results display with filtering options
+- **BillingPage**: Two-step billing and payout forms
+
+### Components
+- **CreatorCard**: Individual creator result display
+- **API Service**: Centralized API communication
+
+## 🔧 Configuration
+
+### Environment Variables
+Create `.env` file in the root directory:
+```
+REACT_APP_API_URL=http://localhost:5000/api
+```
+
+### Backend Configuration
+The backend server configuration can be modified in `backend/index.js`:
+- Port: Default 5000
+- CORS: Configured for local development
+
+## 🧪 Testing the Application
+
+### Test Scenarios
+
+1. **Basic Matching**
+   - Create a brief for Fashion category with ₹500,000 budget
+   - Expect to see @fitwithria with high relevance score
+
+2. **Budget Filtering**
+   - Set budget to ₹50,000
+   - Expect fewer results due to budget constraints
+
+3. **Platform Filtering**
+   - Select only LinkedIn platform
+   - Expect to see @techbyraj prominently
+
+4. **Billing Flow**
+   - Complete brand billing with valid GSTIN
+   - Complete creator payout with valid PAN and bank details
+   - Generate and save summary
+
+### Sample Data
+The application includes sample data for:
+- 5 creators across different verticals
+- 2 sample brand briefs
+- Various platforms, locations, and demographics
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🚨 Known Issues & Future Enhancements
+
+### Current Limitations
+- In-memory data storage (no persistence)
+- No user authentication
+- Limited to predefined categories and locations
+
+### Planned Features
+- Database integration (MongoDB/PostgreSQL)
+- User authentication and authorization
+- Creator profile management
+- Campaign tracking and analytics
+- Payment gateway integration
+- Advanced filtering and search
+- Real-time notifications
+
+## 📞 Support
+
+For questions or issues, please create an issue in the repository or contact the development team.
+
+---
+
+**Built with ❤️ using React, Node.js, and Material-UI**
 
 ### Code Splitting
 
