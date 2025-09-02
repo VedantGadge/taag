@@ -272,221 +272,186 @@ const HomePage = () => {
         </Container>
       </Box>
 
-      {/* Features Section */}
-      <Box sx={{ backgroundColor: '#f8fafc', py: 12 }}>
-        <Container maxWidth="lg">
-          <Box sx={{ textAlign: 'center', mb: 10 }}>
-            <Typography 
-              variant="h2" 
-              sx={{ 
-                fontSize: { xs: '2.5rem', md: '3.5rem' },
-                fontWeight: 600,
+     {/* Features Section */}
+<Box sx={{ backgroundColor: '#f8fafc', py: 12 }}>
+  <Container maxWidth="lg">
+    <Box sx={{ textAlign: 'center', mb: 10 }}>
+      <Typography 
+        variant="h2" 
+        sx={{ 
+          fontSize: { xs: '2.5rem', md: '3.5rem' },
+          fontWeight: 600,
+          mb: 3,
+          color: '#1a1a1a',
+          letterSpacing: '-0.02em'
+        }}
+      >
+        How MatchBill drives creator commerce at scale
+      </Typography>
+    </Box>
+    
+    {/* First feature - Image left, Text right */}
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 2, md: 4 }, mb: 12, flexWrap: 'nowrap' }}>
+      <Box sx={{ flex: '0 0 40%', minWidth: 260, maxWidth: 520 }}>
+        {/* Social Post style card (left of text) */}
+        <Box
+          sx={{
+            position: 'relative',
+            height: { xs: 280, md: 280 },
+            borderRadius: 3,
+            overflow: 'hidden',
+            border: '1px solid #e2e8f0',
+            boxShadow: '0 30px 80px rgba(2, 132, 199, 0.15)',
+            backgroundColor: 'white',
+          }}
+        >
+          <Box
+            component="img"
+            src="/assets/ifnz2.png"
+            alt="Creator post example"
+            loading="lazy"
+            sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+
+          {/* Tag pills */}
+          <Box sx={{ position: 'absolute', top: 16, right: 16, display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#fce7f3', color: '#831843', fontSize: 12, fontWeight: 600 }}>10k–50k Followers</Box>
+            <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#fee2e2', color: '#7f1d1d', fontSize: 12, fontWeight: 600 }}>18–25 Years</Box>
+            <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#e0f2fe', color: '#075985', fontSize: 12, fontWeight: 600 }}>Atlanta, GA</Box>
+          </Box>
+
+          
+        </Box>
+      </Box>
+      <Box sx={{ flex: '1 1 0', pl: { md: 4 } }}>
+          <Typography 
+            variant="h3" 
+            sx={{ 
+              fontSize: { xs: '1.8rem', md: '2rem' },
+              fontWeight: 600,
               mb: 3,
               color: '#1a1a1a',
-              letterSpacing: '-0.02em'
+              lineHeight: 1.2
             }}
           >
-            How MatchBill drives creator commerce at scale
+            Find creators faster - or let them find you
           </Typography>
-        </Box>
-        
-        {/* First feature - Image left, Text right */}
-        <Grid container spacing={8} alignItems="center" sx={{ mb: 12 }}>
-          <Grid item xs={12} md={6}>
-            {/* Social Post style card (left of text) */}
-            <Box
-              sx={{
-                position: 'relative',
-                height: { xs: 280, md: 360 },
-                borderRadius: 3,
-                overflow: 'hidden',
-                border: '1px solid #e2e8f0',
-                boxShadow: '0 30px 80px rgba(2, 132, 199, 0.15)',
-                backgroundColor: 'white',
-              }}
-            >
-              <Box
-                component="img"
-                src="/assets/ifnz2.png"
-                alt="Creator post example"
-                loading="lazy"
-                sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
-
-              {/* Tag pills */}
-              <Box sx={{ position: 'absolute', top: 16, right: 16, display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#fce7f3', color: '#831843', fontSize: 12, fontWeight: 600 }}>10k–50k Followers</Box>
-                <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#fee2e2', color: '#7f1d1d', fontSize: 12, fontWeight: 600 }}>18–25 Years</Box>
-                <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#e0f2fe', color: '#075985', fontSize: 12, fontWeight: 600 }}>Atlanta, GA</Box>
-              </Box>
-
-              {/* CTA chip */}
-              <Box
-                sx={{
-                  position: 'absolute',
-                  left: 16,
-                  bottom: 16,
-                  px: 1.5,
-                  py: 0.75,
-                  borderRadius: 999,
-                  bgcolor: '#22c55e',
-                  color: 'white',
-                  fontSize: 13,
-                  fontWeight: 700,
-                  boxShadow: '0 10px 24px rgba(34, 197, 94, 0.35)'
-                }}
-              >
-                DM Creator on Instagram
-              </Box>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Box>
-              <Typography 
-                variant="h3" 
-                sx={{ 
-                  fontSize: { xs: '2rem', md: '2.5rem' },
-                  fontWeight: 600,
-                  mb: 3,
-                  color: '#1a1a1a',
-                  lineHeight: 1.2
-                }}
-              >
-                Find creators faster - or let them find you
-              </Typography>
-              <Typography 
-                variant="h6" 
-                sx={{ 
-                  color: '#64748b',
-                  fontWeight: 400,
-                  lineHeight: 1.6,
-                  mb: 4
-                }}
-              >
-                Discover creators in half the time with the only influencer marketing platform 
-                with AI-powered inbound and outbound discovery for creators, brands, and campaigns.
-              </Typography>
-              <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: '#0ea5e9',
-                  color: 'white',
-                  px: 4,
-                  py: 1.5,
-                  fontWeight: 600,
-                  textTransform: 'none',
-                  borderRadius: 2,
-                  '&:hover': {
-                    backgroundColor: '#0284c7',
-                  },
-                }}
-                onClick={() => navigate('/brands/find-creators')}
-              >
-                Find influential creators
-              </Button>
-            </Box>
-          </Grid>
-        </Grid>
-        
-        {/* Second feature - Text left, Image right */}
-        <Grid container spacing={8} alignItems="center">
-          <Grid item xs={12} md={6}>
-            <Box>
-              <Typography 
-                variant="h3" 
-                sx={{ 
-                  fontSize: { xs: '2rem', md: '2.5rem' },
-                  fontWeight: 600,
-                  mb: 3,
-                  color: '#1a1a1a',
-                  lineHeight: 1.2
-                }}
-              >
-                Run larger campaigns with less effort
-              </Typography>
-              <Typography 
-                variant="h6" 
-                sx={{ 
-                  color: '#64748b',
-                  fontWeight: 400,
-                  lineHeight: 1.6,
-                  mb: 4
-                }}
-              >
-                Use flexible workflows to automate business processes for any campaign strategy. 
-                Everything from creator outreach to content approval and automated payments.
-              </Typography>
-              <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: '#0ea5e9',
-                  color: 'white',
-                  px: 4,
-                  py: 1.5,
-                  fontWeight: 600,
-                  textTransform: 'none',
-                  borderRadius: 2,
-                  '&:hover': {
-                    backgroundColor: '#0284c7',
-                  },
-                }}
-                onClick={() => navigate('/dashboard')}
-              >
-                Run any campaign strategy
-              </Button>
-            </Box>
-          </Grid>
-          
-          <Grid item xs={12} md={6}>
-            {/* Social Post style card (right of text) */}
-            <Box
-              sx={{
-                position: 'relative',
-                height: { xs: 280, md: 360 },
-                borderRadius: 3,
-                overflow: 'hidden',
-                border: '1px solid #e2e8f0',
-                boxShadow: '0 30px 80px rgba(2, 132, 199, 0.15)',
-                backgroundColor: 'white',
-              }}
-            >
-              <Box
-                component="img"
-                src="/assets/ifnz3.png"
-                alt="Campaign content example"
-                loading="lazy"
-                sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
-
-              {/* Metrics chips */}
-              <Box sx={{ position: 'absolute', top: 16, left: 16, display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#dbeafe', color: '#1e3a8a', fontSize: 12, fontWeight: 700 }}>Reach +42%</Box>
-                <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#dcfce7', color: '#065f46', fontSize: 12, fontWeight: 700 }}>CTR 3.1%</Box>
-                <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#fee2e2', color: '#7f1d1d', fontSize: 12, fontWeight: 700 }}>CAC ↓ 18%</Box>
-              </Box>
-
-              {/* Caption chip */}
-              <Box
-                sx={{
-                  position: 'absolute',
-                  right: 16,
-                  bottom: 16,
-                  px: 1.25,
-                  py: 0.5,
-                  borderRadius: 999,
-                  bgcolor: 'rgba(0,0,0,0.55)',
-                  color: 'white',
-                  fontSize: 12,
-                  fontWeight: 600,
-                }}
-              >
-                Sponsored Post
-              </Box>
-            </Box>
-          </Grid>
-        </Grid>
-      </Container>
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              color: '#64748b',
+              fontWeight: 400,
+              lineHeight: 1.6,
+              mb: 4,
+              fontSize: { xs: '1rem', md: '1.05rem' }
+            }}
+          >
+            Discover creators in half the time with the only influencer marketing platform 
+            with AI-powered inbound and outbound discovery for creators, brands, and campaigns.
+          </Typography>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: '#0ea5e9',
+              color: 'white',
+              px: 4,
+              py: 1.5,
+              fontWeight: 600,
+              textTransform: 'none',
+              borderRadius: 2,
+              '&:hover': {
+                backgroundColor: '#0284c7',
+              },
+            }}
+            onClick={() => navigate('/brands/find-creators')}
+          >
+            Find influential creators
+          </Button>
+      </Box>
     </Box>
+    
+    {/* Second feature - Text left, Image right */}
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 2, md: 4 }, flexWrap: 'nowrap' }}>
+      <Box sx={{ flex: '1 1 0', pr: { md: 4 } }}>
+          <Typography 
+            variant="h3" 
+            sx={{ 
+              fontSize: { xs: '1.8rem', md: '2rem' },
+              fontWeight: 600,
+              mb: 3,
+              color: '#1a1a1a',
+              lineHeight: 1.2
+            }}
+          >
+            Run larger campaigns with less effort
+          </Typography>
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              color: '#64748b',
+              fontWeight: 400,
+              lineHeight: 1.6,
+              mb: 4,
+              fontSize: { xs: '1rem', md: '1.05rem' }
+            }}
+          >
+            Use flexible workflows to automate business processes for any campaign strategy. 
+            Everything from creator outreach to content approval and automated payments.
+          </Typography>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: '#0ea5e9',
+              color: 'white',
+              px: 4,
+              py: 1.5,
+              fontWeight: 600,
+              textTransform: 'none',
+              borderRadius: 2,
+              '&:hover': {
+                backgroundColor: '#0284c7',
+              },
+            }}
+            onClick={() => navigate('/dashboard')}
+          >
+            Run any campaign strategy
+          </Button>
+      </Box>
+      
+      <Box sx={{ flex: '0 0 40%', minWidth: 260, maxWidth: 520 }}>
+        {/* Social Post style card (right of text) */}
+        <Box
+          sx={{
+            position: 'relative',
+            height: { xs: 280, md: 280 },
+            borderRadius: 3,
+            overflow: 'hidden',
+            border: '1px solid #e2e8f0',
+            boxShadow: '0 30px 80px rgba(2, 132, 199, 0.15)',
+            backgroundColor: 'white',
+          }}
+        >
+          <Box
+            component="img"
+            src="/assets/ifnz3.png"
+            alt="Campaign content example"
+            loading="lazy"
+            sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+
+          {/* Metrics chips */}
+          <Box sx={{ position: 'absolute', top: 16, left: 16, display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#dbeafe', color: '#1e3a8a', fontSize: 12, fontWeight: 700 }}>Reach +42%</Box>
+            <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#dcfce7', color: '#065f46', fontSize: 12, fontWeight: 700 }}>CTR 3.1%</Box>
+            <Box sx={{ px: 1.5, py: 0.5, borderRadius: 999, bgcolor: '#fee2e2', color: '#7f1d1d', fontSize: 12, fontWeight: 700 }}>CAC ↓ 18%</Box>
+          </Box>
+
+        </Box>
+      </Box>
+    </Box>
+  </Container>
+</Box>
+
 
       
 
