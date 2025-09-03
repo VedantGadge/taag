@@ -1,0 +1,120 @@
+{
+  "creatorPayoutData": [
+    {
+      "fullName": "Riya Sharma",
+      "panNumber": "ABCDE1234F",
+      "upiId": "riya.sharma@paytm",
+      "accountNumber": "1234567890123456",
+      "ifscCode": "HDFC0001234",
+      "bankName": "HDFC Bank",
+      "accountHolderName": "Riya Sharma",
+      "streetAddress": "Flat 302, Silver Heights, Linking Road",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "pincode": "400050"
+    },
+    {
+      "fullName": "Rajesh Kumar",
+      "panNumber": "FGHIJ5678K",
+      "upiId": "rajesh.tech@phonepe",
+      "accountNumber": "9876543210987654",
+      "ifscCode": "ICIC0004567",
+      "bankName": "ICICI Bank",
+      "accountHolderName": "Rajesh Kumar",
+      "streetAddress": "B-42, Tech Park, Electronic City",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "pincode": "560100"
+    },
+    {
+      "fullName": "Sneha Patel",
+      "panNumber": "KLMNO9012P",
+      "upiId": "sneha.foodie@gpay",
+      "accountNumber": "5555666677778888",
+      "ifscCode": "SBIN0012345",
+      "bankName": "State Bank of India",
+      "accountHolderName": "Sneha Patel",
+      "streetAddress": "House No. 15, Sector 18, Dwarka",
+      "city": "New Delhi",
+      "state": "Delhi",
+      "pincode": "110075"
+    },
+    {
+      "fullName": "Arjun Singh",
+      "panNumber": "PQRST3456U",
+      "upiId": "arjun.travel@paytm",
+      "accountNumber": "1111222233334444",
+      "ifscCode": "AXIS0009876",
+      "bankName": "Axis Bank",
+      "accountHolderName": "Arjun Singh",
+      "streetAddress": "Villa 12, Palm Beach Road, Vasco",
+      "city": "Panaji",
+      "state": "Goa",
+      "pincode": "403802"
+    },
+    {
+      "fullName": "Maya Gupta",
+      "panNumber": "VWXYZ7890A",
+      "upiId": "maya.fashion@phonepe",
+      "accountNumber": "7777888899990000",
+      "ifscCode": "KOTAK0005432",
+      "bankName": "Kotak Mahindra Bank",
+      "accountHolderName": "Maya Gupta",
+      "streetAddress": "Shop 25, Fashion Street, Bandra West",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "pincode": "400050"
+    }
+  ],
+
+  "defaultCreatorDemo": {
+    "fullName": "Devansh Shah",
+    "panNumber": "ABCDE1234F",
+    "upiId": "devansh.creator@paytm",
+    "accountNumber": "1234567890123456",
+    "ifscCode": "HDFC0001234",
+    "bankName": "HDFC Bank",
+    "accountHolderName": "Devansh Shah",
+    "streetAddress": "A-101, Creative Heights, Koregaon Park",
+    "city": "Pune",
+    "state": "Maharashtra",
+    "pincode": "411001"
+  },
+
+  "defaultBrandDemo": {
+    "companyName": "TechCorp Solutions Pvt Ltd",
+    "gstin": "27AAPFU0939F1ZV",
+    "streetAddress": "Plot No. 42, Sector 18, Cyber City",
+    "city": "Gurugram",
+    "state": "Haryana",
+    "pincode": "122015",
+    "email": "marketing@techcorp.com",
+    "phone": "+91 9876543210",
+    "campaignBudget": "250000",
+    "paymentMethod": "Bank Transfer"
+  },
+
+  "validationData": {
+    "panFormats": [
+      "ABCDE1234F",
+      "FGHIJ5678K", 
+      "KLMNO9012P",
+      "PQRST3456U",
+      "VWXYZ7890A"
+    ],
+    "ifscCodes": [
+      "HDFC0001234",
+      "ICIC0004567",
+      "SBIN0012345",
+      "AXIS0009876",
+      "KOTAK0005432"
+    ],
+    "upiFormats": [
+      "username@paytm",
+      "username@phonepe",
+      "username@gpay",
+      "username@ybl",
+      "username@oksbi"
+    ]
+  }
+}

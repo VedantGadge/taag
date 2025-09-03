@@ -3,6 +3,8 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useNavigate } from 'react-router-dom';
+
+// 🎯 DEMO MODE: Both forms are pre-filled with realistic test data for demonstration
 import {
   Paper,
   Typography,
@@ -25,10 +27,139 @@ import {
   FormHelperText,
   Container,
   Breadcrumbs,
-  Link
+  Link,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
 } from '@mui/material';
 import { Print, Save, Home, ChevronRight } from '@mui/icons-material';
 import { api } from '../services/api';
+
+// Professional Invoice Print Styles
+const printStyles = `
+  @media print {
+    @page {
+      margin: 15mm;
+      size: A4;
+    }
+    
+    body * {
+      visibility: hidden;
+    }
+    
+    .print-area, .print-area * {
+      visibility: visible;
+    }
+    
+    .print-area {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      background: white !important;
+      color: black !important;
+      font-family: 'Roboto', Arial, sans-serif;
+    }
+    
+    .no-print {
+      display: none !important;
+    }
+    
+    .invoice-header {
+      border-bottom: 2px solid black;
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .invoice-logo {
+      font-size: 32px;
+      font-weight: bold;
+      color: black !important;
+      margin-bottom: 10px;
+    }
+    
+    .invoice-number {
+      font-size: 18px;
+      color: black !important;
+      margin-bottom: 5px;
+    }
+    
+    .company-details {
+      display: flex;
+      justify-content: space-between;
+      margin: 30px 0;
+    }
+    
+    .company-box {
+      border: 2px solid black;
+      padding: 20px;
+      width: 45%;
+      border-radius: 0;
+    }
+    
+    .company-box h6 {
+      color: black !important;
+      border-bottom: 1px solid black;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+    }
+    
+    .invoice-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 30px 0;
+      border: 2px solid black;
+    }
+    
+    .invoice-table th,
+    .invoice-table td {
+      border: 1px solid black;
+      padding: 15px;
+      text-align: left;
+    }
+    
+    .invoice-table th {
+      background-color: black !important;
+      color: white !important;
+      font-weight: bold;
+    }
+    
+    .total-section {
+      background: white !important;
+      padding: 20px;
+      border: 3px solid black;
+      margin-top: 30px;
+      text-align: center;
+    }
+    
+    .total-section h4 {
+      color: black !important;
+    }
+    
+    .footer-note {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid black;
+      font-size: 12px;
+      color: black !important;
+      text-align: center;
+    }
+    
+    /* Remove all colors and make everything B&W */
+    * {
+      color: black !important;
+      background-color: white !important;
+    }
+    
+    .invoice-table th {
+      background-color: black !important;
+      color: white !important;
+    }
+  }
+`;
 
 // Validation schemas
 const brandBillingSchema = z.object({
@@ -79,17 +210,17 @@ const BillingPage = () => {
   const brandForm = useForm({
     resolver: zodResolver(brandBillingSchema),
     defaultValues: {
-      company: '',
-      gstin: '',
+      company: 'TechCorp Solutions Pvt Ltd',
+      gstin: '27AAPFU0939F1ZV',
       address: {
-        street: '',
-        city: '',
-        state: '',
-        pincode: ''
+        street: 'Plot No. 42, Sector 18, Cyber City',
+        city: 'Gurugram',
+        state: 'Haryana',
+        pincode: '122015'
       },
-      email: '',
-      phone: '',
-      budget: 100000,
+      email: 'marketing@techcorp.com',
+      phone: '+91 9876543210',
+      budget: 250000,
       paymentMethod: 'Bank Transfer'
     }
   });
@@ -98,20 +229,20 @@ const BillingPage = () => {
   const creatorForm = useForm({
     resolver: zodResolver(creatorPayoutSchema),
     defaultValues: {
-      name: '',
-      pan: '',
-      upi: '',
+      name: 'Devansh Shah',
+      pan: 'ABCDE1234F',
+      upi: 'devansh.creator@paytm',
       bankAccount: {
-        accountNumber: '',
-        ifsc: '',
-        bankName: '',
-        accountHolderName: ''
+        accountNumber: '1234567890123456',
+        ifsc: 'HDFC0001234',
+        bankName: 'HDFC Bank',
+        accountHolderName: 'Devansh Shah'
       },
       address: {
-        street: '',
-        city: '',
-        state: '',
-        pincode: ''
+        street: 'A-101, Creative Heights, Koregaon Park',
+        city: 'Pune',
+        state: 'Maharashtra',
+        pincode: '411001'
       }
     }
   });
@@ -626,109 +757,203 @@ const BillingPage = () => {
   );
 
   const renderSummary = () => (
-    <Paper elevation={3} sx={{ p: 4 }}>
-      <Typography variant="h5" gutterBottom color="primary">
-        Billing & Payout Summary
-      </Typography>
+    <>
+      <style>{printStyles}</style>
+      <Paper elevation={3} sx={{ p: 4 }} className="print-area">
+        {/* Invoice Header */}
+        <Box className="invoice-header">
+          <Typography variant="h3" className="invoice-logo">
+            MATCHBILL TECHNOLOGIES
+          </Typography>
+          <Typography variant="subtitle1" sx={{ color: '#666', mb: 2 }}>
+            Influencer Marketing & Creator Management Platform
+          </Typography>
+          <Typography variant="h6" className="invoice-number">
+            INVOICE #MB-{new Date().getFullYear()}-{String(new Date().getMonth() + 1).padStart(2, '0')}-{String(new Date().getDate()).padStart(2, '0')}-{String(Math.floor(Math.random() * 1000)).padStart(3, '0')}
+          </Typography>
+          <Typography variant="body1" sx={{ color: '#666' }}>
+            Date: {new Date().toLocaleDateString('en-IN', { 
+              day: '2-digit', 
+              month: 'long', 
+              year: 'numeric' 
+            })}
+          </Typography>
+        </Box>
 
-      {success && (
-        <Alert severity="success" sx={{ mb: 3 }}>
-          Summary saved successfully!
-        </Alert>
-      )}
+        {success && (
+          <Alert severity="success" sx={{ mb: 3 }} className="no-print">
+            Summary saved successfully!
+          </Alert>
+        )}
 
-      <Grid container spacing={3}>
-        {/* Brand Billing Summary */}
-        <Grid item xs={12} md={6}>
-          <Card variant="outlined">
-            <CardContent>
-              <Typography variant="h6" gutterBottom color="primary">
-                Brand Billing Details
-              </Typography>
-              <Typography><strong>Company:</strong> {brandBillingData?.company}</Typography>
-              <Typography><strong>GSTIN:</strong> {brandBillingData?.gstin}</Typography>
-              <Typography><strong>Email:</strong> {brandBillingData?.email}</Typography>
-              <Typography><strong>Phone:</strong> {brandBillingData?.phone}</Typography>
-              
-              <Divider sx={{ my: 2 }} />
-              
-              <Typography variant="subtitle2" gutterBottom>Address:</Typography>
-              <Typography variant="body2">
-                {brandBillingData?.address?.street}<br/>
-                {brandBillingData?.address?.city}, {brandBillingData?.address?.state} {brandBillingData?.address?.pincode}
-              </Typography>
-              
-              <Divider sx={{ my: 2 }} />
-              
-              <Typography><strong>Budget:</strong> ₹{brandBillingData?.budget?.toLocaleString()}</Typography>
-              <Typography><strong>GST (18%):</strong> ₹{brandBillingData?.gst?.amount?.toLocaleString()}</Typography>
-              <Typography variant="h6" color="primary">
-                <strong>Total Amount:</strong> ₹{brandBillingData?.gst?.total?.toLocaleString()}
-              </Typography>
-              <Typography><strong>Payment Method:</strong> {brandBillingData?.paymentMethod}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Creator Payout Summary */}
-        <Grid item xs={12} md={6}>
-          <Card variant="outlined">
-            <CardContent>
-              <Typography variant="h6" gutterBottom color="primary">
-                Creator Payout Details
-              </Typography>
-              <Typography><strong>Name:</strong> {creatorPayoutData?.name}</Typography>
-              <Typography><strong>PAN:</strong> {creatorPayoutData?.pan}</Typography>
-              <Typography><strong>UPI:</strong> {creatorPayoutData?.upi}</Typography>
-              
-              <Divider sx={{ my: 2 }} />
-              
-              <Typography variant="subtitle2" gutterBottom>Bank Details:</Typography>
-              <Typography variant="body2">
-                <strong>Bank:</strong> {creatorPayoutData?.bankAccount?.bankName}<br/>
-                <strong>Account:</strong> {creatorPayoutData?.bankAccount?.accountNumber}<br/>
-                <strong>IFSC:</strong> {creatorPayoutData?.bankAccount?.ifsc}<br/>
-                <strong>Holder:</strong> {creatorPayoutData?.bankAccount?.accountHolderName}
-              </Typography>
-              
-              <Divider sx={{ my: 2 }} />
-              
-              <Typography variant="subtitle2" gutterBottom>Address:</Typography>
-              <Typography variant="body2">
-                {creatorPayoutData?.address?.street}<br/>
-                {creatorPayoutData?.address?.city}, {creatorPayoutData?.address?.state} {creatorPayoutData?.address?.pincode}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
-            <Button onClick={handleBack} size="large">
-              Back
-            </Button>
-            <Box sx={{ display: 'flex', gap: 2 }}>
-              <Button
-                variant="outlined"
-                startIcon={<Print />}
-                onClick={handlePrintSummary}
-                size="large"
-              >
-                Print Summary
-              </Button>
-              <Button
-                variant="contained"
-                startIcon={<Save />}
-                onClick={handleSaveSummary}
-                size="large"
-              >
-                Save Summary
-              </Button>
-            </Box>
+        {/* Company Details */}
+        <Box className="company-details">
+          <Box className="company-box">
+            <Typography variant="h6" sx={{ color: '#1976d2', mb: 2, fontWeight: 'bold' }}>
+              BRAND INFORMATION
+            </Typography>
+            <Typography variant="body1" sx={{ fontWeight: 'bold', mb: 1 }}>
+              {brandBillingData?.company}
+            </Typography>
+            <Typography variant="body2" sx={{ mb: 1 }}>
+              <strong>GSTIN:</strong> {brandBillingData?.gstin}
+            </Typography>
+            <Typography variant="body2" sx={{ mb: 1 }}>
+              <strong>Email:</strong> {brandBillingData?.email}
+            </Typography>
+            <Typography variant="body2" sx={{ mb: 2 }}>
+              <strong>Phone:</strong> {brandBillingData?.phone}
+            </Typography>
+            <Typography variant="body2" sx={{ fontSize: '0.9rem' }}>
+              {brandBillingData?.address?.street}<br/>
+              {brandBillingData?.address?.city}, {brandBillingData?.address?.state}<br/>
+              {brandBillingData?.address?.pincode}
+            </Typography>
           </Box>
-        </Grid>
-      </Grid>
-    </Paper>
+
+          <Box className="company-box">
+            <Typography variant="h6" sx={{ color: '#1976d2', mb: 2, fontWeight: 'bold' }}>
+              CREATOR INFORMATION
+            </Typography>
+            <Typography variant="body1" sx={{ fontWeight: 'bold', mb: 1 }}>
+              {creatorPayoutData?.name}
+            </Typography>
+            <Typography variant="body2" sx={{ mb: 1 }}>
+              <strong>PAN:</strong> {creatorPayoutData?.pan}
+            </Typography>
+            <Typography variant="body2" sx={{ mb: 1 }}>
+              <strong>UPI ID:</strong> {creatorPayoutData?.upi}
+            </Typography>
+            <Typography variant="body2" sx={{ mb: 2 }}>
+              <strong>Bank:</strong> {creatorPayoutData?.bankAccount?.bankName}
+            </Typography>
+            <Typography variant="body2" sx={{ fontSize: '0.9rem' }}>
+              {creatorPayoutData?.address?.street}<br/>
+              {creatorPayoutData?.address?.city}, {creatorPayoutData?.address?.state}<br/>
+              {creatorPayoutData?.address?.pincode}
+            </Typography>
+          </Box>
+        </Box>
+
+        {/* Invoice Table */}
+        <TableContainer>
+          <Table className="invoice-table">
+            <TableHead>
+              <TableRow>
+                <TableCell><strong>Description</strong></TableCell>
+                <TableCell><strong>Details</strong></TableCell>
+                <TableCell align="right"><strong>Amount (₹)</strong></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+                    Digital Marketing Campaign Services
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Content creation, promotion and influencer marketing services
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="body2">
+                    Client: {brandBillingData?.company}<br/>
+                    Service Provider: {creatorPayoutData?.name}<br/>
+                    Payment Method: {brandBillingData?.paymentMethod}
+                  </Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <Typography variant="body1">
+                    {brandBillingData?.budget?.toLocaleString()}
+                  </Typography>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell colSpan={2}>
+                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                    Goods and Services Tax (GST) @ 18%
+                  </Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <Typography variant="body1">
+                    {brandBillingData?.gst?.amount?.toLocaleString()}
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        {/* Total Section */}
+        <Box className="total-section">
+          <Typography variant="h4" sx={{ color: '#1976d2', fontWeight: 'bold' }}>
+            TOTAL AMOUNT: ₹{brandBillingData?.gst?.total?.toLocaleString()}
+          </Typography>
+          <Typography variant="body2" sx={{ mt: 1, color: '#666' }}>
+            (Inclusive of all applicable taxes)
+          </Typography>
+        </Box>
+
+        {/* Bank Details */}
+        <Box sx={{ mt: 4, p: 3, border: '1px solid #ddd', borderRadius: 2 }}>
+          <Typography variant="h6" sx={{ color: '#1976d2', mb: 2, fontWeight: 'bold' }}>
+            PAYMENT DETAILS
+          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Typography variant="body2" sx={{ mb: 1 }}>
+                <strong>Account Number:</strong> {creatorPayoutData?.bankAccount?.accountNumber}
+              </Typography>
+              <Typography variant="body2">
+                <strong>IFSC Code:</strong> {creatorPayoutData?.bankAccount?.ifsc}
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant="body2" sx={{ mb: 1 }}>
+                <strong>Bank Name:</strong> {creatorPayoutData?.bankAccount?.bankName}
+              </Typography>
+              <Typography variant="body2">
+                <strong>Account Holder:</strong> {creatorPayoutData?.bankAccount?.accountHolderName}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
+
+        {/* Footer */}
+        <Box className="footer-note">
+          <Typography variant="caption">
+            This is a computer-generated invoice and does not require a physical signature.<br/>
+            For any queries, please contact us at support@matchbill.com | +91-9876543210<br/>
+            <strong>MatchBill Technologies Private Limited</strong> | CIN: U72900KA2023PTC123456 | www.matchbill.com
+          </Typography>
+        </Box>
+
+        {/* Action Buttons */}
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 4 }} className="no-print">
+          <Button onClick={handleBack} size="large">
+            Back
+          </Button>
+          <Box sx={{ display: 'flex', gap: 2 }}>
+            <Button
+              variant="outlined"
+              startIcon={<Print />}
+              onClick={handlePrintSummary}
+              size="large"
+            >
+              Print Invoice
+            </Button>
+            <Button
+              variant="contained"
+              startIcon={<Save />}
+              onClick={handleSaveSummary}
+              size="large"
+            >
+              Save Invoice
+            </Button>
+          </Box>
+        </Box>
+      </Paper>
+    </>
   );
 
   return (

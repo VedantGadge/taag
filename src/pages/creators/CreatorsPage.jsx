@@ -227,7 +227,7 @@ const CreatorsPage = () => {
             <Button
               variant="contained"
               size="large"
-              onClick={() => navigate('/creators/dashboard')}
+              onClick={() => navigate('/creator-brief')}
               sx={{
                 backgroundColor: '#0ea5e9',
                 color: 'white',
@@ -245,11 +245,12 @@ const CreatorsPage = () => {
                 },
               }}
             >
-              Get Started as Creator
+              Find Brand Partners
             </Button>
             <Button
               variant="outlined"
               size="large"
+              onClick={() => navigate('/creators/dashboard')}
               sx={{
                 borderColor: '#0ea5e9',
                 color: '#0ea5e9',
@@ -265,7 +266,7 @@ const CreatorsPage = () => {
                 },
               }}
             >
-              View Success Stories
+              Creator Dashboard
             </Button>
           </Box>
         </Box>
@@ -546,7 +547,7 @@ const CreatorsPage = () => {
         <Button
           variant="contained"
           size="large"
-          onClick={() => navigate('/creators/dashboard')}
+          onClick={() => navigate('/creator-brief')}
           sx={{
             px: 6,
             py: 2,
@@ -558,7 +559,7 @@ const CreatorsPage = () => {
             },
           }}
         >
-          Get Started as Creator
+          Find Brand Partners
         </Button>
 
         <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center', gap: 4, flexWrap: 'wrap' }}>

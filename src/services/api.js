@@ -41,6 +41,12 @@ export const api = {
     return response.data;
   },
 
+  // Creator-Brand Matching
+  matchBrands: async (creatorBrief) => {
+    const response = await apiClient.post('/match-brands', creatorBrief);
+    return response.data;
+  },
+
   // Billing APIs
   submitBrandBilling: async (billingData) => {
     const response = await apiClient.post('/billing/brand', billingData);

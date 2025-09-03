@@ -1,0 +1,210 @@
+{
+  "testData": [
+    {
+      "companyName": "TechCorp Solutions Pvt Ltd",
+      "gstin": "27AAPFU0939F1ZV",
+      "streetAddress": "Plot No. 42, Sector 18, Cyber City",
+      "city": "Gurugram",
+      "state": "Haryana",
+      "pincode": "122015",
+      "email": "marketing@techcorp.com",
+      "phone": "+91 9876543210",
+      "campaignBudget": "250000",
+      "paymentMethod": "Bank Transfer"
+    },
+    {
+      "companyName": "FashionForward India",
+      "gstin": "19AABCF1234M1Z5",
+      "streetAddress": "15th Floor, Express Towers, Nariman Point",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "pincode": "400021",
+      "email": "campaigns@fashionforward.in",
+      "phone": "+91 8765432109",
+      "campaignBudget": "500000",
+      "paymentMethod": "UPI"
+    },
+    {
+      "companyName": "FoodieBay Restaurants",
+      "gstin": "29AADCF5678N2Z8",
+      "streetAddress": "Block C, Brigade Road, Commercial Street",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "pincode": "560025",
+      "email": "pr@foodiebay.co.in",
+      "phone": "+91 7654321098",
+      "campaignBudget": "150000",
+      "paymentMethod": "Credit Card"
+    },
+    {
+      "companyName": "HealthFirst Wellness Pvt Ltd",
+      "gstin": "07AAEFC9876P3Z1",
+      "streetAddress": "A-42, Industrial Area, Phase 2",
+      "city": "Chandigarh",
+      "state": "Punjab",
+      "pincode": "160002",
+      "email": "digital@healthfirst.in",
+      "phone": "+91 6543210987",
+      "campaignBudget": "300000",
+      "paymentMethod": "Bank Transfer"
+    },
+    {
+      "companyName": "EduTech Learning Solutions",
+      "gstin": "36AAGCE1357Q4Z9",
+      "streetAddress": "Tech Park, Phase 3, HITEC City",
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "pincode": "500081",
+      "email": "growth@edutech.co.in",
+      "phone": "+91 5432109876",
+      "campaignBudget": "400000",
+      "paymentMethod": "Net Banking"
+    },
+    {
+      "companyName": "GreenLife Organic Foods",
+      "gstin": "24AAHCG2468R5Z2",
+      "streetAddress": "Organic Valley, NH-8, Near IFFCO Chowk",
+      "city": "Gurgaon",
+      "state": "Haryana",
+      "pincode": "122001",
+      "email": "marketing@greenlife.org",
+      "phone": "+91 4321098765",
+      "campaignBudget": "180000",
+      "paymentMethod": "NEFT"
+    },
+    {
+      "companyName": "UrbanStyle Furniture",
+      "gstin": "32ABJPU4587T6Z3",
+      "streetAddress": "Showroom 12, Furniture City, MG Road",
+      "city": "Pune",
+      "state": "Maharashtra",
+      "pincode": "411001",
+      "email": "sales@urbanstyle.in",
+      "phone": "+91 3210987654",
+      "campaignBudget": "220000",
+      "paymentMethod": "Bank Transfer"
+    },
+    {
+      "companyName": "TravelMate Adventures",
+      "gstin": "33ACHPT7890U7Z4",
+      "streetAddress": "Tourism Complex, Beach Road, Baga",
+      "city": "Calangute",
+      "state": "Goa",
+      "pincode": "403516",
+      "email": "bookings@travelmate.goa",
+      "phone": "+91 2109876543",
+      "campaignBudget": "350000",
+      "paymentMethod": "UPI"
+    },
+    {
+      "companyName": "BeautyBloom Cosmetics",
+      "gstin": "20ADKPV1234X8Z5",
+      "streetAddress": "Beauty Plaza, Linking Road, Bandra West",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "pincode": "400050",
+      "email": "influencer@beautybloom.com",
+      "phone": "+91 1098765432",
+      "campaignBudget": "450000",
+      "paymentMethod": "Credit Card"
+    },
+    {
+      "companyName": "SportZone Athletic Wear",
+      "gstin": "06AELQW5678Y9Z6",
+      "streetAddress": "Sports Complex, Sector 18, Noida",
+      "city": "Noida",
+      "state": "Uttar Pradesh",
+      "pincode": "201301",
+      "email": "partnerships@sportzone.in",
+      "phone": "+91 0987654321",
+      "campaignBudget": "600000",
+      "paymentMethod": "Bank Transfer"
+    }
+  ],
+
+  "quickFillOptions": {
+    "smallBudget": {
+      "companyName": "StartupTech India",
+      "gstin": "27AAPFU0939F1ZV",
+      "streetAddress": "WeWork, Cyber Hub",
+      "city": "Gurugram",
+      "state": "Haryana",
+      "pincode": "122002",
+      "email": "founder@startuptech.in",
+      "phone": "+91 9999888877",
+      "campaignBudget": "50000",
+      "paymentMethod": "UPI"
+    },
+    "mediumBudget": {
+      "companyName": "MidScale Solutions",
+      "gstin": "19AABCF1234M1Z5",
+      "streetAddress": "Business Park, Whitefield",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "pincode": "560066",
+      "email": "marketing@midscale.co.in",
+      "phone": "+91 8888777766",
+      "campaignBudget": "250000",
+      "paymentMethod": "Bank Transfer"
+    },
+    "largeBudget": {
+      "companyName": "Enterprise Corp Limited",
+      "gstin": "29AADCF5678N2Z8",
+      "streetAddress": "Corporate Tower, BKC",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "pincode": "400051",
+      "email": "campaigns@enterprise.com",
+      "phone": "+91 7777666655",
+      "campaignBudget": "1000000",
+      "paymentMethod": "RTGS"
+    }
+  },
+
+  "validGSTINFormats": [
+    "27AAPFU0939F1ZV",
+    "19AABCF1234M1Z5", 
+    "29AADCF5678N2Z8",
+    "07AAEFC9876P3Z1",
+    "36AAGCE1357Q4Z9",
+    "24AAHCG2468R5Z2",
+    "32ABJPU4587T6Z3",
+    "33ACHPT7890U7Z4"
+  ],
+
+  "commonStates": [
+    "Maharashtra",
+    "Karnataka", 
+    "Haryana",
+    "Delhi",
+    "Gujarat",
+    "Tamil Nadu",
+    "Telangana",
+    "West Bengal",
+    "Rajasthan",
+    "Punjab"
+  ],
+
+  "campaignBudgetRanges": [
+    "50000",
+    "100000", 
+    "150000",
+    "200000",
+    "250000",
+    "300000",
+    "400000",
+    "500000",
+    "750000",
+    "1000000"
+  ],
+
+  "paymentMethods": [
+    "Bank Transfer",
+    "UPI",
+    "Credit Card", 
+    "Net Banking",
+    "NEFT",
+    "RTGS",
+    "Cheque"
+  ]
+}

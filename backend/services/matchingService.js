@@ -248,8 +248,218 @@ function calculateMatchScores(brandBrief, creators) {
   return finalResults;
 }
 
+/**
+ * Calculate brand matches for creators
+ */
+function calculateBrandMatches(creatorBrief, brands) {
+  // Step 1: Filter eligible brands
+  const eligibleBrands = filterEligibleBrands(creatorBrief, brands);
+  
+  if (eligibleBrands.length === 0) {
+    return [];
+  }
+  
+  // Step 2: Calculate scores for each brand
+  const scoredBrands = eligibleBrands.map(brand => {
+    const categoryMatch = calculateBrandCategoryMatch(creatorBrief, brand);
+    const budgetFit = calculateBrandBudgetFit(creatorBrief, brand);
+    const collaborationMatch = calculateCollaborationMatch(creatorBrief, brand);
+    const audienceAlignment = calculateBrandAudienceAlignment(creatorBrief, brand);
+    
+    // Calculate weighted total score
+    const totalScore = Math.round(
+      (categoryMatch.score * 0.4) +
+      (budgetFit.score * 0.3) +
+      (collaborationMatch.score * 0.2) +
+      (audienceAlignment.score * 0.1)
+    );
+    
+    // Collect top 3 reasons
+    const allReasons = [categoryMatch, budgetFit, collaborationMatch, audienceAlignment]
+      .filter(component => component.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3)
+      .map(component => component.reason);
+    
+    return {
+      ...brand,
+      matchScore: totalScore,
+      reasons: allReasons,
+      breakdown: {
+        categoryMatch: categoryMatch.score,
+        budgetFit: budgetFit.score,
+        collaborationMatch: collaborationMatch.score,
+        audienceAlignment: audienceAlignment.score
+      }
+    };
+  });
+  
+  // Step 3: Sort by score
+  const sortedBrands = scoredBrands.sort((a, b) => b.matchScore - a.matchScore);
+  
+  return sortedBrands;
+}
+
+/**
+ * Filter brands based on creator preferences
+ */
+function filterEligibleBrands(creatorBrief, brands) {
+  return brands.filter(brand => {
+    // Budget filter
+    if (brand.budgetINR < creatorBrief.minBudgetINR || brand.budgetINR > creatorBrief.maxBudgetINR) {
+      return false;
+    }
+    
+    // Platform filter
+    const hasSharedPlatform = creatorBrief.platforms.some(platform => 
+      brand.platforms.includes(platform)
+    );
+    if (!hasSharedPlatform) {
+      return false;
+    }
+    
+    // Content exclusions
+    if (creatorBrief.exclusions.noAdultContent && brand.constraints?.allowsAdultContent) {
+      return false;
+    }
+    
+    return true;
+  });
+}
+
+/**
+ * Calculate category match between creator and brand
+ */
+function calculateBrandCategoryMatch(creatorBrief, brand) {
+  const { categories } = creatorBrief;
+  const { category } = brand;
+  
+  // Perfect match: brand category in creator's categories
+  if (categories.includes(category)) {
+    return {
+      score: 100,
+      reason: `Perfect category match: ${category}`
+    };
+  }
+  
+  // Partial match for related categories
+  const relatedCategories = {
+    'Fashion': ['Beauty', 'Lifestyle'],
+    'Beauty': ['Fashion', 'Lifestyle'],
+    'Technology': ['Education', 'Business'],
+    'Food': ['Lifestyle', 'Travel'],
+    'Travel': ['Lifestyle', 'Food'],
+    'Fitness': ['Lifestyle', 'Wellness'],
+  };
+  
+  if (relatedCategories[category]?.some(related => categories.includes(related))) {
+    return {
+      score: 70,
+      reason: `Related category alignment`
+    };
+  }
+  
+  return {
+    score: 0,
+    reason: "No category alignment"
+  };
+}
+
+/**
+ * Calculate budget fit score
+ */
+function calculateBrandBudgetFit(creatorBrief, brand) {
+  const { minBudgetINR, maxBudgetINR } = creatorBrief;
+  const { budgetINR } = brand;
+  
+  // Within preferred range
+  if (budgetINR >= minBudgetINR && budgetINR <= maxBudgetINR) {
+    const midpoint = (minBudgetINR + maxBudgetINR) / 2;
+    const distance = Math.abs(budgetINR - midpoint);
+    const maxDistance = (maxBudgetINR - minBudgetINR) / 2;
+    const score = Math.max(80, 100 - (distance / maxDistance) * 20);
+    
+    return {
+      score: Math.round(score),
+      reason: `Budget fits your range (₹${budgetINR.toLocaleString()})`
+    };
+  }
+  
+  return {
+    score: 0,
+    reason: "Budget outside preferred range"
+  };
+}
+
+/**
+ * Calculate collaboration type match
+ */
+function calculateCollaborationMatch(creatorBrief, brand) {
+  const { collaborationTypes, preferredTones } = creatorBrief;
+  const { tone } = brand;
+  
+  let score = 0;
+  let reasons = [];
+  
+  // Check collaboration alignment (simplified - in real app, brands would specify preferred types)
+  if (collaborationTypes.includes('Sponsored Posts') || collaborationTypes.includes('Brand Ambassador')) {
+    score += 60;
+    reasons.push('Suitable collaboration types');
+  }
+  
+  // Check tone alignment
+  const toneMatch = preferredTones.some(creatorTone => 
+    tone.some(brandTone => brandTone.toLowerCase().includes(creatorTone.toLowerCase()))
+  );
+  
+  if (toneMatch) {
+    score += 40;
+    reasons.push('Brand tone alignment');
+  }
+  
+  return {
+    score: Math.min(score, 100),
+    reason: reasons.join(', ') || 'Limited collaboration fit'
+  };
+}
+
+/**
+ * Calculate audience alignment
+ */
+function calculateBrandAudienceAlignment(creatorBrief, brand) {
+  const { audienceDemographics } = creatorBrief;
+  const { targetLocations, targetAges } = brand;
+  
+  let score = 0;
+  
+  // Location alignment
+  const locationMatch = audienceDemographics.locations.some(location => 
+    targetLocations.includes(location)
+  );
+  if (locationMatch) {
+    score += 50;
+  }
+  
+  // Age alignment (simplified)
+  const creatorAgeRanges = audienceDemographics.ageGroups;
+  const brandAgeRange = targetAges; // [minAge, maxAge]
+  
+  if (creatorAgeRanges.some(range => {
+    const [min, max] = range.includes('+') ? [65, 100] : range.split('-').map(Number);
+    return (min <= brandAgeRange[1] && max >= brandAgeRange[0]);
+  })) {
+    score += 50;
+  }
+  
+  return {
+    score,
+    reason: score > 50 ? 'Good audience alignment' : 'Limited audience overlap'
+  };
+}
+
 module.exports = {
   calculateMatchScores,
+  calculateBrandMatches,
   calculateRelevance,
   calculateAudienceFit,
   calculatePerformance,

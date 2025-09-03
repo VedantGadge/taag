@@ -13,7 +13,9 @@ import Navbar from './components/layout/Navbar';
 // Import pages
 import HomePage from './pages/HomePage';
 import BriefForm from './pages/BriefForm';
+import CreatorBriefForm from './pages/CreatorBriefForm';
 import MatchConsole from './pages/MatchConsole';
+import BrandMatchConsole from './pages/BrandMatchConsole';
 import BillingPage from './pages/BillingPage';
 import DashboardPage from './pages/DashboardPage';
 
@@ -52,6 +54,7 @@ function App() {
               {/* Creator routes */}
               <Route path="/creators" element={<CreatorsPage />} />
               <Route path="/creators/dashboard" element={<CreatorDashboard />} />
+              <Route path="/creators/find-brands" element={<CreatorBriefForm />} />
               <Route path="/creators/analytics" element={
                 <ComingSoon 
                   title="Creator Analytics" 
@@ -67,7 +70,9 @@ function App() {
               
               {/* Existing app routes */}
               <Route path="/brief" element={<BriefForm />} />
+              <Route path="/creator-brief" element={<CreatorBriefForm />} />
               <Route path="/matches" element={<MatchConsole />} />
+              <Route path="/brand-matches" element={<BrandMatchConsole />} />
               <Route path="/billing" element={<BillingPage />} />
               
               {/* Auth routes (placeholders) */}

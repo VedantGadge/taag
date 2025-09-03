@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -18,8 +17,6 @@ import {
   Button,
   TextField,
   InputAdornment,
-  Breadcrumbs,
-  Link,
   Alert,
   CircularProgress,
   Avatar,
@@ -35,12 +32,9 @@ import {
   Visibility,
   AttachMoney,
   Search,
-  FilterList,
   Download,
   Share,
-  MoreVert,
-  Home,
-  ChevronRight
+  MoreVert
 } from '@mui/icons-material';
 import {
   BarChart,
@@ -59,11 +53,14 @@ import {
 } from 'recharts';
 
 const DashboardPage = () => {
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
+  const [creators, setCreators] = useState([]);
+  const [creatorsLoading, setCreatorsLoading] = useState(false);
+  const [brands, setBrands] = useState([]);
+  const [brandsLoading, setBrandsLoading] = useState(false);
   const [filters, setFilters] = useState({
     location: 'all',
     category: 'all',
@@ -73,6 +70,56 @@ const DashboardPage = () => {
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
+    
+    // Fetch creators data when switching to Creators tab
+    if (newValue === 1 && creators.length === 0) {
+      fetchCreators();
+    }
+    
+    // Fetch brands data when switching to Brands tab
+    if (newValue === 2 && brands.length === 0) {
+      fetchBrands();
+    }
+  };
+
+  // Fetch creators data from backend
+  const fetchCreators = async () => {
+    try {
+      setCreatorsLoading(true);
+      const response = await fetch('http://localhost:5000/api/analytics/creators');
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch creators');
+      }
+      
+      const result = await response.json();
+      setCreators(result.creators || []);
+    } catch (error) {
+      console.error('Error fetching creators:', error);
+      setError('Failed to load creators data. Please try again later.');
+    } finally {
+      setCreatorsLoading(false);
+    }
+  };
+
+  // Fetch brands data from backend
+  const fetchBrands = async () => {
+    try {
+      setBrandsLoading(true);
+      const response = await fetch('http://localhost:5000/api/analytics/brands');
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch brands');
+      }
+      
+      const result = await response.json();
+      setBrands(result.brands || []);
+    } catch (error) {
+      console.error('Error fetching brands:', error);
+      setError('Failed to load brands data. Please try again later.');
+    } finally {
+      setBrandsLoading(false);
+    }
   };
 
   // Fetch dashboard data
@@ -165,7 +212,7 @@ const DashboardPage = () => {
               lineHeight: 1.2,
             }}
           >
-            Actionable
+            Influencer Marketing
             {' '}
             <Box
               component="span"
@@ -176,283 +223,12 @@ const DashboardPage = () => {
                 WebkitTextFillColor: 'transparent',
               }}
             >
-              Analytics
+              Analytics Hub
             </Box>
           </Typography>
           <Typography variant="h6" sx={{ opacity: 0.85, maxWidth: 800 }}>
-            Track creator performance, audience growth, campaigns, and revenue—all in one place.
+            Real-time insights into creator performance, brand partnerships, and campaign success metrics across all platforms
           </Typography>
-        </Container>
-      </Box>
-      {/* Hero Section with Marketing Videos */}
-      <Box sx={{ 
-        background: 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #38bdf8 100%)', 
-        position: 'relative',
-        overflow: 'hidden',
-        py: { xs: 6, md: 8 }
-      }}>
-        {/* Animated Background Elements */}
-        <Box sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          opacity: 0.1,
-          background: `
-            radial-gradient(circle at 20% 50%, rgba(255,255,255,0.2) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(255,255,255,0.2) 0%, transparent 50%),
-            radial-gradient(circle at 40% 80%, rgba(255,255,255,0.2) 0%, transparent 50%)
-          `
-        }} />
-        
-        {/* Floating Video Cards */}
-        <Box sx={{
-          position: 'absolute',
-          top: '10%',
-          right: '10%',
-          width: 200,
-          height: 120,
-          borderRadius: 4,
-          background: 'rgba(255,255,255,0.15)',
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255,255,255,0.2)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          animation: 'float 6s ease-in-out infinite',
-          '@keyframes float': {
-            '0%, 100%': { transform: 'translateY(0px)' },
-            '50%': { transform: 'translateY(-20px)' }
-          },
-          '&::before': {
-            content: '"📹"',
-            fontSize: '2rem',
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)'
-          }
-        }}>
-          <Typography variant="caption" sx={{ color: 'white', mt: 4 }}>
-            Live Marketing Video
-          </Typography>
-        </Box>
-
-        <Box sx={{
-          position: 'absolute',
-          bottom: '15%',
-          left: '15%',
-          width: 160,
-          height: 100,
-          borderRadius: 4,
-          background: 'rgba(255,255,255,0.15)',
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255,255,255,0.2)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          animation: 'float 8s ease-in-out infinite 2s',
-          '&::before': {
-            content: '"🎬"',
-            fontSize: '1.8rem',
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)'
-          }
-        }}>
-          <Typography variant="caption" sx={{ color: 'white', mt: 3 }}>
-            Creator Content
-          </Typography>
-        </Box>
-
-        <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 2 }}>
-          {/* Breadcrumbs */}
-          <Breadcrumbs 
-            aria-label="breadcrumb" 
-            sx={{ 
-              mb: 4,
-              '& .MuiBreadcrumbs-separator': {
-                color: 'rgba(255,255,255,0.7)'
-              },
-              '& a, & p': {
-                color: 'rgba(255,255,255,0.9)'
-              }
-            }}
-            separator={<ChevronRight fontSize="small" />}
-          >
-            <Link
-              underline="hover"
-              color="inherit"
-              onClick={() => navigate('/')}
-              sx={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                cursor: 'pointer',
-                '&:hover': { color: 'white' }
-              }}
-            >
-              <Home sx={{ mr: 0.5 }} fontSize="inherit" />
-              Home
-            </Link>
-            <Typography color="inherit" fontWeight={600}>
-              Analytics Dashboard
-            </Typography>
-          </Breadcrumbs>
-
-          {/* Hero Content */}
-          <Grid container spacing={6} alignItems="center">
-            <Grid item xs={12} md={7}>
-              <Box sx={{ textAlign: { xs: 'center', md: 'left' } }}>
-                <Typography 
-                  variant="h1" 
-                  sx={{
-                    color: 'white',
-                    mb: 3,
-                    textShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                    fontSize: { xs: '2.5rem', md: '3.5rem' }
-                  }}
-                >
-                  Influencer Marketing
-                  <br />
-                  <Box component="span" sx={{ 
-                    background: 'linear-gradient(135deg, #ffffff 0%, #e0f2fe 100%)',
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                  }}>
-                    Analytics Hub
-                  </Box>
-                </Typography>
-                
-                <Typography 
-                  variant="h5" 
-                  sx={{ 
-                    color: 'rgba(255,255,255,0.9)',
-                    mb: 4,
-                    maxWidth: 600,
-                    lineHeight: 1.4,
-                    fontWeight: 400
-                  }}
-                >
-                  Real-time insights into creator performance, brand partnerships, and campaign success metrics across all platforms
-                </Typography>
-
-                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: { xs: 'center', md: 'flex-start' } }}>
-                  <Button
-                    variant="contained"
-                    size="large"
-                    sx={{
-                      background: 'rgba(255,255,255,0.2)',
-                      backdropFilter: 'blur(10px)',
-                      border: '1px solid rgba(255,255,255,0.3)',
-                      color: 'white',
-                      px: 4,
-                      py: 1.5,
-                      '&:hover': {
-                        background: 'rgba(255,255,255,0.25)',
-                        transform: 'translateY(-2px)',
-                      }
-                    }}
-                  >
-                    View Live Data
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    size="large"
-                    sx={{
-                      borderColor: 'rgba(255,255,255,0.5)',
-                      color: 'white',
-                      px: 4,
-                      py: 1.5,
-                      '&:hover': {
-                        borderColor: 'white',
-                        background: 'rgba(255,255,255,0.1)',
-                        transform: 'translateY(-2px)',
-                      }
-                    }}
-                  >
-                    Export Report
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-
-            <Grid item xs={12} md={5}>
-              <Box sx={{ 
-                position: 'relative',
-                textAlign: 'center',
-                display: { xs: 'none', md: 'block' }
-              }}>
-                {/* Main Video Card */}
-                <Card sx={{
-                  background: 'rgba(255,255,255,0.15)',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255,255,255,0.2)',
-                  borderRadius: 6,
-                  p: 4,
-                  transform: 'rotate(-2deg)',
-                  animation: 'pulse 4s ease-in-out infinite',
-                  '@keyframes pulse': {
-                    '0%, 100%': { transform: 'rotate(-2deg) scale(1)' },
-                    '50%': { transform: 'rotate(-2deg) scale(1.05)' }
-                  }
-                }}>
-                  <Box sx={{ mb: 3 }}>
-                    <Typography variant="h2" sx={{ color: 'white', mb: 1 }}>
-                      🎥
-                    </Typography>
-                    <Typography variant="h6" sx={{ color: 'white', fontWeight: 600 }}>
-                      Content Creation
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)' }}>
-                      Live marketing campaigns
-                    </Typography>
-                  </Box>
-                  
-                  <Box sx={{ 
-                    height: 100,
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
-                    borderRadius: 3,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    mb: 2
-                  }}>
-                    <Typography variant="h4" sx={{ color: 'white' }}>▶️</Typography>
-                  </Box>
-                  
-                  <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                    Recording brand collaboration
-                  </Typography>
-                </Card>
-
-                {/* Floating Stats */}
-                <Box sx={{
-                  position: 'absolute',
-                  top: -20,
-                  right: -20,
-                  background: 'rgba(255,255,255,0.9)',
-                  borderRadius: 3,
-                  p: 2,
-                  minWidth: 120,
-                  animation: 'bounce 3s ease-in-out infinite',
-                  '@keyframes bounce': {
-                    '0%, 100%': { transform: 'translateY(0px)' },
-                    '50%': { transform: 'translateY(-10px)' }
-                  }
-                }}>
-                  <Typography variant="h6" color="primary.main" fontWeight="bold">
-                    +127%
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary">
-                    Engagement Rate
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
         </Container>
       </Box>
 
@@ -515,18 +291,20 @@ const DashboardPage = () => {
 
           {/* Tab Content */}
           {activeTab === 0 && data && <OverviewTab overviewData={data} />}
-          {activeTab === 1 && data && (
+          {activeTab === 1 && (
             <CreatorsTab 
-              creators={data.creators || []} 
+              creators={creators} 
               filters={filters} 
-              onFilterChange={setFilters} 
+              onFilterChange={setFilters}
+              loading={creatorsLoading}
             />
           )}
-          {activeTab === 2 && data && (
+          {activeTab === 2 && (
             <BrandsTab 
-              brands={data.brands || []} 
+              brands={brands} 
               filters={filters} 
-              onFilterChange={setFilters} 
+              onFilterChange={setFilters}
+              loading={brandsLoading}
             />
           )}
         </Container>
@@ -581,9 +359,9 @@ const OverviewTab = ({ overviewData }) => {
   ];
 
   return (
-    <Box>
-  {/* Metrics Cards */}
-      <Grid container spacing={4} sx={{ mb: 6 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+      {/* Metrics Cards */}
+      <Grid container spacing={4} sx={{ mb: 6, justifyContent: 'center' }}>
         {metrics.map((metric, index) => (
           <Grid item xs={12} sm={6} md={3} key={index}>
             <Card 
@@ -635,9 +413,9 @@ const OverviewTab = ({ overviewData }) => {
       </Grid>
 
       {/* Charts Section */}
-      <Grid container spacing={6}>
+      <Grid container spacing={6} sx={{ justifyContent: 'center' }}>
         {/* Category Distribution */}
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
           <Card sx={{ 
             p: 3, 
             borderRadius: 4,
@@ -669,7 +447,7 @@ const OverviewTab = ({ overviewData }) => {
         </Grid>
 
         {/* Platform Statistics */}
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
           <Card sx={{ 
             p: 3, 
             borderRadius: 4,
@@ -694,7 +472,7 @@ const OverviewTab = ({ overviewData }) => {
         </Grid>
 
         {/* Geographic Distribution */}
-        <Grid item xs={12}>
+        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
           <Card sx={{ 
             p: 3, 
             borderRadius: 4,
@@ -737,14 +515,22 @@ const OverviewTab = ({ overviewData }) => {
 };
 
 // Component for Creators Tab
-const CreatorsTab = ({ creators, filters, onFilterChange }) => {
+const CreatorsTab = ({ creators, filters, onFilterChange, loading }) => {
   const filteredCreators = creators.filter(creator => {
     return (
       (filters.location === 'all' || creator.location === filters.location) &&
       (filters.category === 'all' || creator.category === filters.category) &&
-      (filters.platform === 'all' || creator.platform === filters.platform)
+      (filters.platform === 'all' || creator.platforms?.includes(filters.platform))
     );
   });
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
+        <CircularProgress size={60} />
+      </Box>
+    );
+  }
 
   return (
     <Box>
@@ -871,7 +657,7 @@ const CreatorsTab = ({ creators, filters, onFilterChange }) => {
       {/* Creators Grid */}
       <Grid container spacing={4}>
         {filteredCreators.map((creator, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+          <Grid item xs={12} sm={6} md={4} lg={3} key={creator.id || index}>
             <Card sx={{ 
               borderRadius: 4,
               '&:hover': {
@@ -883,7 +669,7 @@ const CreatorsTab = ({ creators, filters, onFilterChange }) => {
               <CardContent sx={{ p: 3 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <Avatar 
-                    src={creator.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${creator.name}`}
+                    src={creator.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${creator.handle || creator.name}`}
                     sx={{ width: 48, height: 48, mr: 2 }}
                   />
                   <Box sx={{ flex: 1 }}>
@@ -891,7 +677,7 @@ const CreatorsTab = ({ creators, filters, onFilterChange }) => {
                       {creator.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      @{creator.username || creator.name.toLowerCase().replace(' ', '')}
+                      {creator.handle}
                     </Typography>
                   </Box>
                   <IconButton size="small">
@@ -906,12 +692,15 @@ const CreatorsTab = ({ creators, filters, onFilterChange }) => {
                     color="primary" 
                     variant="outlined"
                   />
-                  <Chip 
-                    label={creator.platform} 
-                    size="small" 
-                    variant="filled"
-                    sx={{ backgroundColor: '#0ea5e9', color: 'white' }}
-                  />
+                  {creator.platforms && creator.platforms.slice(0, 2).map((platform, idx) => (
+                    <Chip 
+                      key={idx}
+                      label={platform} 
+                      size="small" 
+                      variant="filled"
+                      sx={{ backgroundColor: '#0ea5e9', color: 'white' }}
+                    />
+                  ))}
                 </Stack>
 
                 <Grid container spacing={2} sx={{ mb: 2 }}>
@@ -928,7 +717,7 @@ const CreatorsTab = ({ creators, filters, onFilterChange }) => {
                   <Grid item xs={6}>
                     <Box sx={{ textAlign: 'center' }}>
                       <Typography variant="h6" color="primary.main" fontWeight="bold">
-                        {creator.engagement || '4.2'}%
+                        {creator.engagementRate || '0'}%
                       </Typography>
                       <Typography variant="caption" color="text.secondary">
                         Engagement
@@ -982,7 +771,7 @@ const CreatorsTab = ({ creators, filters, onFilterChange }) => {
 };
 
 // Component for Brands Tab
-const BrandsTab = ({ brands, filters, onFilterChange }) => {
+const BrandsTab = ({ brands, filters, onFilterChange, loading }) => {
   const filteredBrands = brands.filter(brand => {
     return (
       (filters.location === 'all' || brand.location === filters.location) &&
@@ -990,12 +779,20 @@ const BrandsTab = ({ brands, filters, onFilterChange }) => {
     );
   });
 
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
+        <CircularProgress size={60} />
+      </Box>
+    );
+  }
+
   return (
     <Box>
       {/* Filter Bar */}
       <Paper sx={{ p: 3, mb: 4, borderRadius: 4 }}>
         <Grid container spacing={3} alignItems="center">
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={3}>
             <TextField
               fullWidth
               variant="outlined"
@@ -1070,23 +867,14 @@ const BrandsTab = ({ brands, filters, onFilterChange }) => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              <Button
-                variant="outlined"
-                startIcon={<FilterList />}
-                sx={{ flex: 1 }}
-              >
-                More Filters
-              </Button>
-              <Button
-                variant="outlined"
-                startIcon={<Download />}
-                sx={{ flex: 1 }}
-              >
-                Export
-              </Button>
-            </Box>
+          <Grid item xs={12} sm={6} md={3}>
+            <Button
+              variant="outlined"
+              startIcon={<Download />}
+              fullWidth
+            >
+              Export Data
+            </Button>
           </Grid>
         </Grid>
       </Paper>
@@ -1094,7 +882,7 @@ const BrandsTab = ({ brands, filters, onFilterChange }) => {
       {/* Brands Grid */}
       <Grid container spacing={4}>
         {filteredBrands.map((brand, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
+          <Grid item xs={12} sm={6} md={4} key={brand.id || index}>
             <Card sx={{ 
               borderRadius: 4,
               '&:hover': {
@@ -1114,7 +902,7 @@ const BrandsTab = ({ brands, filters, onFilterChange }) => {
                       {brand.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {brand.category}
+                      {brand.industry || brand.category}
                     </Typography>
                   </Box>
                   <IconButton size="small">
@@ -1123,7 +911,7 @@ const BrandsTab = ({ brands, filters, onFilterChange }) => {
                 </Box>
 
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  {brand.description || 'Leading brand in the industry with focus on innovation and quality.'}
+                  Leading brand in the {brand.category.toLowerCase()} industry with focus on innovation and quality.
                 </Typography>
 
                 <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
@@ -1134,7 +922,7 @@ const BrandsTab = ({ brands, filters, onFilterChange }) => {
                     variant="outlined"
                   />
                   <Chip 
-                    label={`${brand.campaigns || Math.floor(Math.random() * 20 + 5)} campaigns`} 
+                    label={`${brand.campaignsRun || 0} campaigns`} 
                     size="small" 
                     variant="filled"
                     sx={{ backgroundColor: '#06b6d4', color: 'white' }}
@@ -1145,20 +933,43 @@ const BrandsTab = ({ brands, filters, onFilterChange }) => {
                   <Grid item xs={6}>
                     <Box sx={{ textAlign: 'center' }}>
                       <Typography variant="h6" color="primary.main" fontWeight="bold">
-                        ${(brand.budget || Math.floor(Math.random() * 500000 + 50000)).toLocaleString()}
+                        ₹{(brand.totalSpent || 0).toLocaleString()}
                       </Typography>
                       <Typography variant="caption" color="text.secondary">
-                        Campaign Budget
+                        Total Spent
                       </Typography>
                     </Box>
                   </Grid>
                   <Grid item xs={6}>
                     <Box sx={{ textAlign: 'center' }}>
-                      <Typography variant="h6" color="primary.main" fontWeight="bold">
-                        {brand.rating || '4.8'}★
+                      <Typography variant="h6" color="success.main" fontWeight="bold">
+                        {brand.roi || '0'}x
                       </Typography>
                       <Typography variant="caption" color="text.secondary">
-                        Brand Rating
+                        ROI
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+
+                <Grid container spacing={2} sx={{ mb: 2 }}>
+                  <Grid item xs={6}>
+                    <Box sx={{ textAlign: 'center' }}>
+                      <Typography variant="h6" color="text.primary" fontWeight="bold">
+                        ₹{(brand.avgCampaignBudget || 0).toLocaleString()}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        Avg Budget
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Box sx={{ textAlign: 'center' }}>
+                      <Typography variant="h6" color="text.primary" fontWeight="bold">
+                        {brand.topPerformingCreator || 'N/A'}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        Top Creator
                       </Typography>
                     </Box>
                   </Grid>

@@ -74,7 +74,7 @@ const creators = [
 const brands = [
   {
     "_id": "b1",
-    "name": "Acme Activewear",
+    "name": "FitLife Activewear",
     "category": "Fashion",
     "budgetINR": 500000,
     "targetLocations": ["Mumbai", "Delhi"],
@@ -86,14 +86,86 @@ const brands = [
   },
   {
     "_id": "b2",
-    "name": "FinSmart",
-    "category": "Fintech",
+    "name": "FinSmart Pro",
+    "category": "Technology",
     "budgetINR": 300000,
     "targetLocations": ["Bengaluru", "Hyderabad"],
     "targetAges": [22, 35],
     "goals": ["signups", "sales"],
     "tone": ["informative", "trustworthy"],
     "platforms": ["YouTube", "LinkedIn"],
+    "constraints": { "noAdultContent": true, "timelineDays": 30 }
+  },
+  {
+    "_id": "b3",
+    "name": "StyleCo Fashion",
+    "category": "Fashion",
+    "budgetINR": 750000,
+    "targetLocations": ["Mumbai", "Delhi", "Bengaluru"],
+    "targetAges": [18, 28],
+    "goals": ["sales", "brand awareness"],
+    "tone": ["trendy", "stylish"],
+    "platforms": ["Instagram", "TikTok"],
+    "constraints": { "noAdultContent": true, "timelineDays": 14 }
+  },
+  {
+    "_id": "b4",
+    "name": "TechReview Hub",
+    "category": "Technology",
+    "budgetINR": 400000,
+    "targetLocations": ["Bengaluru", "Chennai", "Mumbai"],
+    "targetAges": [20, 40],
+    "goals": ["reviews", "awareness"],
+    "tone": ["informative", "professional"],
+    "platforms": ["YouTube", "Instagram"],
+    "constraints": { "noAdultContent": true, "timelineDays": 28 }
+  },
+  {
+    "_id": "b5",
+    "name": "BeautyBliss Cosmetics",
+    "category": "Beauty",
+    "budgetINR": 600000,
+    "targetLocations": ["Mumbai", "Delhi", "Pune"],
+    "targetAges": [16, 35],
+    "goals": ["sales", "tutorials"],
+    "tone": ["trendy", "authentic"],
+    "platforms": ["Instagram", "YouTube", "TikTok"],
+    "constraints": { "noAdultContent": true, "timelineDays": 21 }
+  },
+  {
+    "_id": "b6",
+    "name": "TravelWonders",
+    "category": "Travel",
+    "budgetINR": 800000,
+    "targetLocations": ["Mumbai", "Delhi", "Bengaluru", "Goa"],
+    "targetAges": [22, 45],
+    "goals": ["bookings", "awareness"],
+    "tone": ["inspiring", "adventurous"],
+    "platforms": ["Instagram", "YouTube"],
+    "constraints": { "noAdultContent": true, "timelineDays": 35 }
+  },
+  {
+    "_id": "b7",
+    "name": "FoodieFeast",
+    "category": "Food",
+    "budgetINR": 350000,
+    "targetLocations": ["Delhi", "Mumbai", "Noida"],
+    "targetAges": [18, 40],
+    "goals": ["orders", "reviews"],
+    "tone": ["fun", "casual"],
+    "platforms": ["Instagram", "Reels"],
+    "constraints": { "noAdultContent": true, "timelineDays": 14 }
+  },
+  {
+    "_id": "b8",
+    "name": "FitnessPro Gym",
+    "category": "Fitness",
+    "budgetINR": 450000,
+    "targetLocations": ["Mumbai", "Pune", "Bengaluru"],
+    "targetAges": [18, 35],
+    "goals": ["memberships", "awareness"],
+    "tone": ["energetic", "motivational"],
+    "platforms": ["Instagram", "YouTube"],
     "constraints": { "noAdultContent": true, "timelineDays": 30 }
   }
 ];
