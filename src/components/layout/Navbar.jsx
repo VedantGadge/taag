@@ -14,6 +14,7 @@ import {
   Drawer,
   List,
   ListItem,
+  ListItemButton,
   ListItemText,
   ListItemIcon,
 } from '@mui/material';
@@ -133,6 +134,8 @@ const Navbar = () => {
           <Button
             ref={brandsRef}
             onClick={() => handleNavigation('/brands')}
+            disableRipple
+            disableFocusRipple
             sx={{
               color: isActivePath('/brands') ? 'common.white' : 'rgba(255, 255, 255, 0.8)',
               fontWeight: isActivePath('/brands') ? 600 : 500,
@@ -154,6 +157,8 @@ const Navbar = () => {
           <Button
             ref={creatorsRef}
             onClick={() => handleNavigation('/creators')}
+            disableRipple
+            disableFocusRipple
             sx={{
               color: isActivePath('/creators') ? 'common.white' : 'rgba(255, 255, 255, 0.8)',
               fontWeight: isActivePath('/creators') ? 600 : 500,
@@ -175,6 +180,8 @@ const Navbar = () => {
           <Button
             ref={analyticsRef}
             onClick={() => handleNavigation('/dashboard')}
+            disableRipple
+            disableFocusRipple
             sx={{
               color: isActivePath('/dashboard') ? 'common.white' : 'rgba(255, 255, 255, 0.8)',
               fontWeight: isActivePath('/dashboard') ? 600 : 500,
@@ -198,6 +205,7 @@ const Navbar = () => {
           <Button
             variant="outlined"
             onClick={() => navigate('/login')}
+            disableRipple
             sx={{
               borderColor: 'rgba(255, 255, 255, 0.6)',
               color: 'rgba(255, 255, 255, 0.9)',
@@ -213,6 +221,7 @@ const Navbar = () => {
           <Button
             variant="contained"
             onClick={() => navigate('/signup')}
+            disableRipple
             sx={{
               background: 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%)',
               '&:hover': {
@@ -255,6 +264,7 @@ const Navbar = () => {
         <IconButton
           onClick={() => setMobileDrawerOpen(true)}
           sx={{ color: 'common.white' }}
+          disableRipple
         >
           <MenuIcon />
         </IconButton>
@@ -304,7 +314,7 @@ const Navbar = () => {
           <Typography variant="h6" fontWeight={600}>
             Menu
           </Typography>
-          <IconButton onClick={() => setMobileDrawerOpen(false)}>
+          <IconButton onClick={() => setMobileDrawerOpen(false)} disableRipple>
             <CloseIcon />
           </IconButton>
         </Box>
@@ -315,22 +325,17 @@ const Navbar = () => {
               FOR BRANDS
             </Typography>
           </ListItem>
-          <ListItem
-            button
-            onClick={() => handleNavigation('/brands')}
-            sx={{
-              borderRadius: 2,
-              mx: 1,
-              mb: 1,
-              '&:hover': {
-                backgroundColor: 'primary.50',
-              },
-            }}
-          >
-            <ListItemIcon sx={{ color: 'primary.main', minWidth: 40 }}>
-              <Person />
-            </ListItemIcon>
-            <ListItemText primary="For Brands" />
+          <ListItem sx={{ mx: 1, mb: 1 }}>
+            <ListItemButton
+              onClick={() => handleNavigation('/brands')}
+              disableRipple
+              sx={{ borderRadius: 2, px: 0 }}
+            >
+              <ListItemIcon sx={{ color: 'primary.main', minWidth: 40 }}>
+                <Person />
+              </ListItemIcon>
+              <ListItemText primary="For Brands" />
+            </ListItemButton>
           </ListItem>
 
           <ListItem>
@@ -338,22 +343,17 @@ const Navbar = () => {
               FOR CREATORS
             </Typography>
           </ListItem>
-          <ListItem
-            button
-            onClick={() => handleNavigation('/creators')}
-            sx={{
-              borderRadius: 2,
-              mx: 1,
-              mb: 1,
-              '&:hover': {
-                backgroundColor: 'primary.50',
-              },
-            }}
-          >
-            <ListItemIcon sx={{ color: 'secondary.main', minWidth: 40 }}>
-              <Person />
-            </ListItemIcon>
-            <ListItemText primary="For Creators" />
+          <ListItem sx={{ mx: 1, mb: 1 }}>
+            <ListItemButton
+              onClick={() => handleNavigation('/creators')}
+              disableRipple
+              sx={{ borderRadius: 2, px: 0 }}
+            >
+              <ListItemIcon sx={{ color: 'secondary.main', minWidth: 40 }}>
+                <Person />
+              </ListItemIcon>
+              <ListItemText primary="For Creators" />
+            </ListItemButton>
           </ListItem>
 
           <ListItem>
@@ -361,38 +361,24 @@ const Navbar = () => {
               ANALYTICS
             </Typography>
           </ListItem>
-          <ListItem
-            button
-            onClick={() => handleNavigation('/dashboard')}
-            sx={{
-              borderRadius: 2,
-              mx: 1,
-              mb: 1,
-              '&:hover': {
-                backgroundColor: 'primary.50',
-              },
-            }}
-          >
-            <ListItemIcon sx={{ color: 'info.main', minWidth: 40 }}>
-              <TrendingUp />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+          <ListItem sx={{ mx: 1, mb: 1 }}>
+            <ListItemButton
+              onClick={() => handleNavigation('/dashboard')}
+              disableRipple
+              sx={{ borderRadius: 2, px: 0 }}
+            >
+              <ListItemIcon sx={{ color: 'info.main', minWidth: 40 }}>
+                <TrendingUp />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
           </ListItem>
 
           <Box sx={{ p: 2, mt: 4 }}>
-            <Button
-              variant="outlined"
-              fullWidth
-              onClick={() => handleNavigation('/login')}
-              sx={{ mb: 2 }}
-            >
+            <Button variant="outlined" fullWidth onClick={() => handleNavigation('/login')} sx={{ mb: 2 }} disableRipple>
               Sign In
             </Button>
-            <Button
-              variant="contained"
-              fullWidth
-              onClick={() => handleNavigation('/signup')}
-            >
+            <Button variant="contained" fullWidth onClick={() => handleNavigation('/signup')} disableRipple>
               Get Started
             </Button>
           </Box>

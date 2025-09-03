@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion, useInView } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -27,24 +28,81 @@ import {
   Shield,
 } from '@mui/icons-material';
 
+// Animation wrapper component
+const AnimatedSection = ({ children, delay = 0, direction = 'up' }) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  const variants = {
+    hidden: {
+      opacity: 0,
+      y: direction === 'up' ? 50 : direction === 'down' ? -50 : 0,
+      x: direction === 'left' ? 50 : direction === 'right' ? -50 : 0,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      x: 0,
+      transition: {
+        duration: 0.8,
+        delay,
+        ease: 'easeOut',
+      },
+    },
+  };
+
+  return (
+    <motion.div ref={ref} initial="hidden" animate={isInView ? 'visible' : 'hidden'} variants={variants}>
+      {children}
+    </motion.div>
+  );
+};
+
 const CreatorsPage = () => {
   const navigate = useNavigate();
 
   const benefits = [
     {
       icon: <MonetizationOn sx={{ fontSize: 40, color: 'success.main' }} />,
-      title: 'Fair & Fast Payments',
-      description: 'Get paid quickly with transparent pricing. Instant payouts within 24 hours of campaign completion.',
+      title: 'Fair Payouts',
+      description: 'Transparent rates and instant payments for your branded content and UGC.',
     },
     {
       icon: <Campaign sx={{ fontSize: 40, color: 'primary.main' }} />,
-      title: 'Quality Brand Partners',
-      description: 'Work with verified brands that align with your content and values. No more spam or irrelevant offers.',
+      title: 'Quality Campaigns',
+      description: 'Get matched with verified brands that align with your niche and audience.',
     },
     {
       icon: <Analytics sx={{ fontSize: 40, color: 'secondary.main' }} />,
       title: 'Growth Analytics',
-      description: 'Track your performance, earnings, and audience growth with detailed insights and recommendations.',
+      description: 'Track performance, optimize your content, and grow repeat collaborations.',
+    },
+  ];
+
+  const earningPotential = [
+    {
+      tier: 'Starter',
+      followers: '1k–10k',
+      earningRange: '₹2,000–₹8,000 / campaign',
+      perPost: 'Typical ₹1,000–₹3,000 per post',
+      color: 'primary',
+      badge: 'Micro',
+    },
+    {
+      tier: 'Rising',
+      followers: '10k–100k',
+      earningRange: '₹8,000–₹50,000 / campaign',
+      perPost: 'Typical ₹5,000–₹20,000 per post',
+      color: 'secondary',
+      badge: 'Mid-tier',
+    },
+    {
+      tier: 'Pro',
+      followers: '100k+',
+      earningRange: '₹50,000–₹3L+ / campaign',
+      perPost: 'Typical ₹25,000–₹1L+ per post',
+      color: 'success',
+      badge: 'Top-tier',
     },
   ];
 
@@ -59,51 +117,24 @@ const CreatorsPage = () => {
     'Dedicated creator support team',
   ];
 
-  const earningPotential = [
-    {
-      tier: 'Micro Influencer',
-      followers: '1K - 10K',
-      earningRange: '₹5K - ₹25K',
-      perPost: 'per campaign',
-      badge: 'Growing',
-      color: 'success',
-    },
-    {
-      tier: 'Mid-Tier Creator',
-      followers: '10K - 100K',
-      earningRange: '₹25K - ₹1L',
-      perPost: 'per campaign',
-      badge: 'Popular',
-      color: 'primary',
-    },
-    {
-      tier: 'Macro Influencer',
-      followers: '100K+',
-      earningRange: '₹1L - ₹10L',
-      perPost: 'per campaign',
-      badge: 'Elite',
-      color: 'secondary',
-    },
-  ];
-
   const testimonials = [
     {
-      name: 'Priya Sharma',
-      handle: '@priyafashion',
-      avatar: 'PS',
-      followers: '85K',
+      avatar: 'AK',
+      name: 'Aisha Khan',
+      handle: '@aishakhan',
+      followers: '120k',
       platform: 'Instagram',
-      comment: 'MatchBill connected me with amazing fashion brands. I\'ve earned ₹2.5L in just 3 months!',
-      earnings: '₹2.5L in 3 months',
+      earnings: '₹2.4L last quarter',
+      comment: 'MatchBill connected me with 6 brands that fit perfectly. Payments were instant and the brief process was super clear.',
     },
     {
-      name: 'Rahul Tech',
-      handle: '@rahultech',
-      avatar: 'RT',
-      followers: '120K',
+      avatar: 'RG',
+      name: 'Rohit Gupta',
+      handle: '@rohitsays',
+      followers: '45k',
       platform: 'YouTube',
-      comment: 'Finally, a platform that values creators. Fair rates, quick payments, and genuine brand partnerships.',
-      earnings: '₹4L in 6 months',
+      earnings: '₹95k in 30 days',
+      comment: 'The inbound matches saved me hours every week. I can focus on creating while campaigns run smoothly.',
     },
   ];
 
@@ -130,20 +161,15 @@ const CreatorsPage = () => {
       >
         <Box
           component="video"
-          src="/assets/HeroVid.mp4"
+          src="/assets/ccVid.mp4"
           autoPlay
           loop
           muted
           playsInline
           preload="auto"
-          sx={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            display: 'block',
-          }}
+          sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
         />
-        {/* Edge fade to blend video into black background */}
+        {/* Left-edge fade for seamless blend */}
         <Box
           sx={{
             position: 'absolute',
@@ -155,20 +181,20 @@ const CreatorsPage = () => {
         />
       </Box>
 
-      {/* Content overlay */}
+      {/* Content overlays above video */}
       <Container maxWidth={false} disableGutters sx={{ position: 'relative', zIndex: 2 }}>
         <Box sx={{ maxWidth: { xs: '100%', md: 800 }, px: { xs: 5, md: 15 } }}>
           <Typography
             variant="h1"
             sx={{
               fontSize: { xs: '2.5rem', md: '4rem' },
-              fontWeight: 700,
+              fontWeight: 600,
               mb: 3,
-              lineHeight: 1.15,
+              lineHeight: 1.1,
               letterSpacing: '-0.02em',
             }}
           >
-            Turn your content into
+            Create with brands that
             <br />
             <Box
               component="span"
@@ -179,7 +205,7 @@ const CreatorsPage = () => {
                 WebkitTextFillColor: 'transparent',
               }}
             >
-              real income
+              value your work
             </Box>
           </Typography>
 
@@ -188,8 +214,8 @@ const CreatorsPage = () => {
             sx={{
               mb: 5,
               opacity: 0.85,
-              fontSize: { xs: '1.15rem', md: '1.35rem' },
-              lineHeight: 1.55,
+              fontSize: { xs: '1.15rem', md: '1.5rem' },
+              lineHeight: 1.5,
               maxWidth: 640,
               fontWeight: 400,
             }}
@@ -219,7 +245,7 @@ const CreatorsPage = () => {
                 },
               }}
             >
-              Join as Creator
+              Get Started as Creator
             </Button>
             <Button
               variant="outlined"
@@ -257,33 +283,35 @@ const CreatorsPage = () => {
           Built by creators, for creators. We understand what you need to succeed.
         </Typography>
       </Box>
-      
-      <Grid container spacing={4}>
+
+      <Grid container spacing={4} justifyContent="center" alignItems="stretch">
         {benefits.map((benefit, index) => (
-          <Grid item xs={12} md={4} key={index}>
-            <Card
-              sx={{
-                height: '100%',
-                textAlign: 'center',
-                p: 3,
-                '&:hover': {
-                  transform: 'translateY(-8px)',
-                  transition: 'all 0.3s ease',
-                },
-              }}
-            >
-              <CardContent>
-                <Box sx={{ mb: 3 }}>
-                  {benefit.icon}
-                </Box>
-                <Typography variant="h5" fontWeight={600} gutterBottom>
-                  {benefit.title}
-                </Typography>
-                <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.7 }}>
-                  {benefit.description}
-                </Typography>
-              </CardContent>
-            </Card>
+          <Grid item xs={12} sm={6} md={4} key={index} sx={{ display: 'flex', justifyContent: 'center' }}>
+            <AnimatedSection delay={index * 0.15} direction="up">
+              <Card
+                sx={{
+                  height: '100%',
+                  textAlign: 'center',
+                  p: 3,
+                  maxWidth: 560,
+                  mx: 'auto',
+                  '&:hover': {
+                    transform: 'translateY(-8px)',
+                    transition: 'all 0.3s ease',
+                  },
+                }}
+              >
+                <CardContent>
+                  <Box sx={{ mb: 3 }}>{benefit.icon}</Box>
+                  <Typography variant="h5" fontWeight={600} gutterBottom>
+                    {benefit.title}
+                  </Typography>
+                  <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.7 }}>
+                    {benefit.description}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </AnimatedSection>
           </Grid>
         ))}
       </Grid>
@@ -293,51 +321,56 @@ const CreatorsPage = () => {
   const EarningSection = () => (
     <Box sx={{ backgroundColor: 'grey.50', py: 10 }}>
       <Container maxWidth="lg">
-        <Box sx={{ textAlign: 'center', mb: 8 }}>
-          <Typography variant="h2" fontWeight={700} gutterBottom>
-            Your Earning Potential
-          </Typography>
-          <Typography variant="h6" color="text.secondary">
-            Fair compensation based on your reach and engagement
-          </Typography>
-        </Box>
-        
-        <Grid container spacing={4}>
+        <AnimatedSection delay={0.1}>
+          <Box sx={{ textAlign: 'center', mb: 8 }}>
+            <Typography variant="h2" fontWeight={700} gutterBottom>
+              Your Earning Potential
+            </Typography>
+            <Typography variant="h6" color="text.secondary">
+              Fair compensation based on your reach and engagement
+            </Typography>
+          </Box>
+        </AnimatedSection>
+
+        <Grid container spacing={4} justifyContent="center" alignItems="stretch">
           {earningPotential.map((tier, index) => (
-            <Grid item xs={12} md={4} key={index}>
-              <Card
-                sx={{
-                  height: '100%',
-                  textAlign: 'center',
-                  p: 4,
-                  border: '2px solid transparent',
-                  '&:hover': {
-                    borderColor: `${tier.color}.main`,
-                    transform: 'translateY(-8px)',
-                    transition: 'all 0.3s ease',
-                  },
-                }}
-              >
-                <CardContent>
-                  <Chip
-                    label={tier.badge}
-                    color={tier.color}
-                    sx={{ mb: 2, fontWeight: 600 }}
-                  />
-                  <Typography variant="h5" fontWeight={600} gutterBottom>
-                    {tier.tier}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    {tier.followers} followers
-                  </Typography>
-                  <Typography variant="h4" fontWeight={700} color={`${tier.color}.main`} sx={{ my: 2 }}>
-                    {tier.earningRange}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {tier.perPost}
-                  </Typography>
-                </CardContent>
-              </Card>
+            <Grid item xs={12} sm={6} md={4} key={index} sx={{ display: 'flex', justifyContent: 'center' }}>
+              <AnimatedSection delay={index * 0.15}>
+                <Card
+                  sx={{
+                    height: '100%',
+                    textAlign: 'center',
+                    p: 3,
+                    maxWidth: 560,
+                    mx: 'auto',
+                    border: '2px solid transparent',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    '&:hover': {
+                      borderColor: `${tier.color}.main`,
+                      transform: 'translateY(-8px)',
+                      transition: 'all 0.3s ease',
+                    },
+                  }}
+                >
+                  <CardContent sx={{ flex: 1 }}>
+                    <Chip label={tier.badge} color={tier.color} sx={{ mb: 2, fontWeight: 600 }} />
+                    <Typography variant="h5" fontWeight={600} gutterBottom>
+                      {tier.tier}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" gutterBottom>
+                      {tier.followers} followers
+                    </Typography>
+                    <Typography variant="h4" fontWeight={700} color={`${tier.color}.main`} sx={{ my: 2 }}>
+                      {tier.earningRange}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {tier.perPost}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </AnimatedSection>
             </Grid>
           ))}
         </Grid>
@@ -349,75 +382,80 @@ const CreatorsPage = () => {
     <Container maxWidth="lg" sx={{ py: 10 }}>
       <Grid container spacing={6} alignItems="center">
         <Grid item xs={12} md={6}>
-          <Typography variant="h2" fontWeight={700} gutterBottom>
-            Creator Tools & Features
-          </Typography>
-          <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>
-            Everything you need to manage collaborations and grow your creator business
-          </Typography>
-          
-          <List sx={{ '& .MuiListItem-root': { py: 1 } }}>
-            {features.map((feature, index) => (
-              <ListItem key={index} sx={{ pl: 0 }}>
-                <ListItemIcon sx={{ minWidth: 32 }}>
-                  <CheckCircle sx={{ color: 'success.main', fontSize: 20 }} />
-                </ListItemIcon>
-                <ListItemText
-                  primary={feature}
-                  sx={{
-                    '& .MuiListItemText-primary': {
-                      fontSize: '1rem',
-                      fontWeight: 500,
-                    },
-                  }}
-                />
-              </ListItem>
-            ))}
-          </List>
+          <AnimatedSection delay={0.1} direction="left">
+            <Typography variant="h2" fontWeight={700} gutterBottom>
+              Creator Tools & Features
+            </Typography>
+            <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>
+              Everything you need to manage collaborations and grow your creator business
+            </Typography>
+            <List sx={{ '& .MuiListItem-root': { py: 1 } }}>
+              {features.map((feature, index) => (
+                <ListItem key={index} sx={{ pl: 0 }}>
+                  <ListItemIcon sx={{ minWidth: 32 }}>
+                    <CheckCircle sx={{ color: 'success.main', fontSize: 20 }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={feature}
+                    sx={{
+                      '& .MuiListItemText-primary': {
+                        fontSize: '1rem',
+                        fontWeight: 500,
+                      },
+                    }}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </AnimatedSection>
         </Grid>
-        
+
         <Grid item xs={12} md={6}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Paper
-                sx={{
-                  p: 3,
-                  borderRadius: 3,
-                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                  color: 'white',
-                }}
-              >
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                  <Shield sx={{ fontSize: 32 }} />
-                  <Typography variant="h6" fontWeight={600}>
-                    Secure & Trusted
+              <AnimatedSection delay={0.2}>
+                <Paper
+                  sx={{
+                    p: 3,
+                    borderRadius: 3,
+                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                    color: 'white',
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+                    <Shield sx={{ fontSize: 32 }} />
+                    <Typography variant="h6" fontWeight={600}>
+                      Secure & Trusted
+                    </Typography>
+                  </Box>
+                  <Typography variant="body2" sx={{ opacity: 0.9 }}>
+                    Bank-grade security with automated GST handling and instant payments
                   </Typography>
-                </Box>
-                <Typography variant="body2" sx={{ opacity: 0.9 }}>
-                  Bank-grade security with automated GST handling and instant payments
-                </Typography>
-              </Paper>
+                </Paper>
+              </AnimatedSection>
             </Grid>
-            
+
             <Grid item xs={12}>
-              <Paper
-                sx={{
-                  p: 3,
-                  borderRadius: 3,
-                  background: 'linear-gradient(135deg, #6366f1 0%, #4338ca 100%)',
-                  color: 'white',
-                }}
-              >
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                  <Speed sx={{ fontSize: 32 }} />
-                  <Typography variant="h6" fontWeight={600}>
-                    Quick Onboarding
+              <AnimatedSection delay={0.3}>
+                <Paper
+                  sx={{
+                    p: 3,
+                    borderRadius: 3,
+                    background: 'linear-gradient(135deg, #6366f1 0%, #4338ca 100%)',
+                    color: 'white',
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+                    <Speed sx={{ fontSize: 32 }} />
+                    <Typography variant="h6" fontWeight={600}>
+                      Quick Onboarding
+                    </Typography>
+                  </Box>
+                  <Typography variant="body2" sx={{ opacity: 0.9 }}>
+                    Get verified and start earning within 24 hours of joining
                   </Typography>
-                </Box>
-                <Typography variant="body2" sx={{ opacity: 0.9 }}>
-                  Get verified and start earning within 24 hours of joining
-                </Typography>
-              </Paper>
+                </Paper>
+              </AnimatedSection>
             </Grid>
           </Grid>
         </Grid>
@@ -428,62 +466,66 @@ const CreatorsPage = () => {
   const TestimonialsSection = () => (
     <Box sx={{ backgroundColor: 'grey.50', py: 10 }}>
       <Container maxWidth="lg">
-        <Box sx={{ textAlign: 'center', mb: 8 }}>
-          <Typography variant="h2" fontWeight={700} gutterBottom>
-            Creator Success Stories
-          </Typography>
-          <Typography variant="h6" color="text.secondary">
-            Real creators, real earnings, real growth
-          </Typography>
-        </Box>
-        
+        <AnimatedSection delay={0.1}>
+          <Box sx={{ textAlign: 'center', mb: 8 }}>
+            <Typography variant="h2" fontWeight={700} gutterBottom>
+              Creator Success Stories
+            </Typography>
+            <Typography variant="h6" color="text.secondary">
+              Real creators, real earnings, real growth
+            </Typography>
+          </Box>
+        </AnimatedSection>
+
         <Grid container spacing={4}>
           {testimonials.map((testimonial, index) => (
             <Grid item xs={12} md={6} key={index}>
-              <Card
-                sx={{
-                  height: '100%',
-                  p: 4,
-                  '&:hover': {
-                    transform: 'translateY(-4px)',
-                    transition: 'all 0.3s ease',
-                  },
-                }}
-              >
-                <CardContent>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 3 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                      <Avatar sx={{ backgroundColor: 'secondary.main', width: 56, height: 56 }}>
-                        {testimonial.avatar}
-                      </Avatar>
-                      <Box>
-                        <Typography variant="h6" fontWeight={600}>
-                          {testimonial.name}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          {testimonial.handle} • {testimonial.followers} followers
-                        </Typography>
+              <AnimatedSection delay={index * 0.15}>
+                <Card
+                  sx={{
+                    height: '100%',
+                    p: 4,
+                    '&:hover': {
+                      transform: 'translateY(-4px)',
+                      transition: 'all 0.3s ease',
+                    },
+                  }}
+                >
+                  <CardContent>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 3 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                        <Avatar sx={{ backgroundColor: 'secondary.main', width: 56, height: 56 }}>
+                          {testimonial.avatar}
+                        </Avatar>
+                        <Box>
+                          <Typography variant="h6" fontWeight={600}>
+                            {testimonial.name}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            {testimonial.handle} • {testimonial.followers} followers
+                          </Typography>
+                        </Box>
                       </Box>
+                      <Chip label={testimonial.platform} size="small" color="primary" />
                     </Box>
-                    <Chip label={testimonial.platform} size="small" color="primary" />
-                  </Box>
-                  
-                  <Typography variant="body1" sx={{ mb: 3, fontStyle: 'italic', lineHeight: 1.7 }}>
-                    "{testimonial.comment}"
-                  </Typography>
-                  
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Box sx={{ display: 'flex' }}>
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} sx={{ color: 'warning.main', fontSize: 20 }} />
-                      ))}
-                    </Box>
-                    <Typography variant="subtitle2" color="success.main" fontWeight={600}>
-                      {testimonial.earnings}
+
+                    <Typography variant="body1" sx={{ mb: 3, fontStyle: 'italic', lineHeight: 1.7 }}>
+                      "{testimonial.comment}"
                     </Typography>
-                  </Box>
-                </CardContent>
-              </Card>
+
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Box sx={{ display: 'flex' }}>
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} sx={{ color: 'warning.main', fontSize: 20 }} />
+                        ))}
+                      </Box>
+                      <Typography variant="subtitle2" color="success.main" fontWeight={600}>
+                        {testimonial.earnings}
+                      </Typography>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </AnimatedSection>
             </Grid>
           ))}
         </Grid>
@@ -492,47 +534,49 @@ const CreatorsPage = () => {
   );
 
   const CTASection = () => (
-    <Container maxWidth="md" sx={{ py: 10, textAlign: 'center' }}>
-      <Typography variant="h2" fontWeight={700} gutterBottom>
-        Ready to Start Earning?
-      </Typography>
-      <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>
-        Join thousands of creators who are already monetizing their content with top brands
-      </Typography>
-      
-      <Button
-        variant="contained"
-        size="large"
-        onClick={() => navigate('/creators/dashboard')}
-        sx={{
-          px: 6,
-          py: 2,
-          fontSize: '1.1rem',
-          background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)',
-          '&:hover': {
-            background: 'linear-gradient(135deg, #0891b2 0%, #2563eb 100%)',
-            transform: 'translateY(-2px)',
-          },
-        }}
-      >
-        Get Started as Creator
-      </Button>
-      
-      <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center', gap: 4, flexWrap: 'wrap' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <CheckCircle sx={{ color: 'success.main' }} />
-          <Typography variant="body2">Free to join</Typography>
+    <AnimatedSection delay={0.1}>
+      <Container maxWidth="md" sx={{ py: 10, textAlign: 'center' }}>
+        <Typography variant="h2" fontWeight={700} gutterBottom>
+          Ready to Start Earning?
+        </Typography>
+        <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>
+          Join thousands of creators who are already monetizing their content with top brands
+        </Typography>
+
+        <Button
+          variant="contained"
+          size="large"
+          onClick={() => navigate('/creators/dashboard')}
+          sx={{
+            px: 6,
+            py: 2,
+            fontSize: '1.1rem',
+            background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)',
+            '&:hover': {
+              background: 'linear-gradient(135deg, #0891b2 0%, #2563eb 100%)',
+              transform: 'translateY(-2px)',
+            },
+          }}
+        >
+          Get Started as Creator
+        </Button>
+
+        <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center', gap: 4, flexWrap: 'wrap' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <CheckCircle sx={{ color: 'success.main' }} />
+            <Typography variant="body2">Free to join</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <CheckCircle sx={{ color: 'success.main' }} />
+            <Typography variant="body2">Instant payments</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <CheckCircle sx={{ color: 'success.main' }} />
+            <Typography variant="body2">No hidden fees</Typography>
+          </Box>
         </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <CheckCircle sx={{ color: 'success.main' }} />
-          <Typography variant="body2">Instant payments</Typography>
-        </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <CheckCircle sx={{ color: 'success.main' }} />
-          <Typography variant="body2">No hidden fees</Typography>
-        </Box>
-      </Box>
-    </Container>
+      </Container>
+    </AnimatedSection>
   );
 
   return (
