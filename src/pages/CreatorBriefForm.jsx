@@ -104,25 +104,25 @@ const CreatorBriefForm = () => {
   } = useForm({
     resolver: zodResolver(creatorBriefSchema),
     defaultValues: {
-      categories: ['Fashion'],
-      platforms: ['Instagram'],
-      minBudgetINR: 10000,
-      maxBudgetINR: 100000,
-      preferredTones: ['Authentic'],
-      contentTypes: ['Posts'],
+      categories: ['Fashion', 'Beauty'],
+      platforms: ['Instagram', 'YouTube'],
+      minBudgetINR: 300000,
+      maxBudgetINR: 800000,
+      preferredTones: ['Trendy', 'Energetic', 'Authentic'],
+      contentTypes: ['Posts', 'Stories', 'Reels'],
       audienceDemographics: {
         ageGroups: ['18-24', '25-34'],
-        locations: ['Mumbai', 'Delhi'],
+        locations: ['Mumbai', 'Delhi', 'Bengaluru'],
       },
       exclusions: {
         noAdultContent: true,
         noAlcoholTobacco: false,
         noGambling: true,
       },
-      collaborationTypes: ['Sponsored Posts'],
+      collaborationTypes: ['Sponsored Posts', 'Brand Ambassador', 'Product Reviews'],
       availability: {
         startDate: new Date().toISOString().split('T')[0],
-        duration: '1-2 weeks',
+        duration: '3-4 weeks',
       },
     },
   });
